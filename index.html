@@ -1,18 +1,486 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的个人主页</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>林语晨 · 简约个人主页</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        nav a { margin-right: 15px; text-decoration: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #d9eaf5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7bb3c9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5290b0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* 头部区域 (头像 + 简介 + 图标) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 0 1rem;
+        }
+
+        .avatar-frame {
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 35px -12px rgba(66, 153, 194, 0.25);
+            margin-bottom: 1.5rem;
+            transition: transform 0.25s ease;
+        }
+        .avatar-frame:hover {
+            transform: scale(1.02);
+        }
+        .avatar {
+            width: 118px;
+            height: 118px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-tag {
+            font-size: 1rem;
+            color: #3a6e8c;
+            background: rgba(115, 176, 204, 0.2);
+            backdrop-filter: blur(2px);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .bio {
+            max-width: 580px;
+            font-size: 1.05rem;
+            color: #2c4b64;
+            margin: 0.8rem auto 1.2rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* 图标社交栏 */
+        .icon-links {
+            display: flex;
+            gap: 1.6rem;
+            justify-content: center;
+            margin: 1.2rem 0 0.5rem;
+            flex-wrap: wrap;
+        }
+        .icon-circle {
+            background: white;
+            width: 48px;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            color: #2c7da0;
+            box-shadow: 0 6px 14px rgba(48, 108, 142, 0.12);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .icon-circle:hover {
+            background: #d9effa;
+            color: #146b8f;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(43, 113, 144, 0.2);
+        }
+
+        /* 滑动分块卡片布局 */
+        .sections-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.2rem;
+        }
+
+        .card-block {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 10px 22px -8px rgba(70, 130, 160, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            scroll-margin-top: 2rem;
+        }
+        .card-block:hover {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 20px 28px -12px rgba(52, 114, 142, 0.2);
+            border-color: #cae3ef;
+        }
+
+        .block-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.4rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #165a77;
+            letter-spacing: -0.2px;
+        }
+        .block-title i {
+            font-size: 1.8rem;
+            color: #2d86ac;
+            background: #e0f0f8;
+            padding: 8px;
+            border-radius: 18px;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #1f445c;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 技能标签 / 工具列表 */
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0 0.4rem;
+        }
+        .skill-tag {
+            background: #eef4fc;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #236b8e;
+            border: 1px solid #cbe2ef;
+            transition: all 0.2s;
+        }
+        .skill-tag i {
+            margin-right: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* 作品展示网格 */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.4rem;
+            margin-top: 0.5rem;
+        }
+        .project-item {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.2rem;
+            transition: 0.2s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            border: 1px solid #e2eff7;
+        }
+        .project-item:hover {
+            transform: translateY(-4px);
+            border-color: #b8d6e8;
+            box-shadow: 0 12px 20px -14px #87b9d1;
+        }
+        .project-icon {
+            font-size: 2rem;
+            color: #2780a3;
+            margin-bottom: 0.7rem;
+        }
+        .project-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #174d67;
+        }
+        .project-item p {
+            font-size: 0.85rem;
+            color: #3f6b84;
+        }
+
+        /* 联系区块 */
+        .contact-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffffba;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+        .contact-info i {
+            font-size: 1.2rem;
+            color: #2c7da0;
+            width: 28px;
+        }
+        .contact-info span {
+            font-weight: 500;
+            color: #1f5570;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #608da5;
+            border-top: 1px solid #cce3ef;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.5rem 1.2rem 2.5rem;
+            }
+            .block-title {
+                font-size: 1.4rem;
+            }
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .card-block {
+                padding: 1.4rem 1.2rem;
+            }
+            .contact-line {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+
+        /* 滑动动画辅助 (页面滚动时卡片稍微淡入效果，无需额外js) */
+        .card-block {
+            transition: transform 0.2s ease, background 0.2s, box-shadow 0.2s;
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="/">主页</a>
-        <a href="/about.html">关于我</a>
-    </nav>
-    <h1>欢迎来到我的网站！</h1>
-    <p>这是通过GitHub Pages搭建的主页。</p>
+<div class="container">
+    <!-- 头部区域：头像 + 个人简介 + 图标 -->
+    <div class="hero">
+        <div class="avatar-frame">
+            <img class="avatar" src="https://ui-avatars.com/api/?background=9bc8df&color=ffffff&rounded=true&bold=true&size=120&fontsize=0.55&name=林+语+晨&length=2" alt="avatar">
+        </div>
+        <h1>林语晨 · Yuchen Lin</h1>
+        <div class="hero-tag">
+            <i class="fas fa-code" style="margin-right: 6px;"></i> 创意开发者 & 体验设计师
+        </div>
+        <div class="bio">
+            以简约优雅的方式构建数字产品，热爱前端美学与交互细节。我相信好的设计是克制的、有温度的。
+            现居上海，持续探索技术与艺术的交汇点。
+        </div>
+        <!-- 图标社交栏 (FontAwesome) -->
+        <div class="icon-links">
+            <a href="#" class="icon-circle" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="icon-circle" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+            <a href="#" class="icon-circle" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="icon-circle" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="icon-circle" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+
+    <!-- 滑动分块：每个卡片为独立内容区块 -->
+    <div class="sections-grid">
+        <!-- 关于我 -->
+        <div class="card-block" id="about">
+            <div class="block-title">
+                <i class="fas fa-user-astronaut"></i>
+                <span>关于我</span>
+            </div>
+            <div class="about-text">
+                <p>🎯 拥有 6 年全栈开发与设计经验，从零到一打造过多个面向创作者的效率工具。相信干净代码与直觉界面同等重要。</p>
+                <p>🌱 目前专注于前端交互工程、设计系统及可访问性优化。业余喜欢研究极简主义UI和微动效。</p>
+                <p>📌 中央美术学院数字媒体专业学士，辅修计算机科学；曾任职于Figma中国区设计工具生态团队。</p>
+            </div>
+        </div>
+
+        <!-- 专业技能 + 工具栈 -->
+        <div class="card-block" id="skills">
+            <div class="block-title">
+                <i class="fas fa-cogs"></i>
+                <span>技术 & 工具</span>
+            </div>
+            <div class="skills-wrap">
+                <span class="skill-tag"><i class="fab fa-react"></i> React / Next.js</span>
+                <span class="skill-tag"><i class="fab fa-vuejs"></i> Vue 3</span>
+                <span class="skill-tag"><i class="fab fa-js"></i> TypeScript</span>
+                <span class="skill-tag"><i class="fab fa-figma"></i> Figma</span>
+                <span class="skill-tag"><i class="fas fa-palette"></i> Tailwind / CSS</span>
+                <span class="skill-tag"><i class="fas fa-database"></i> Node.js / Supabase</span>
+                <span class="skill-tag"><i class="fab fa-git-alt"></i> Git & Github Actions</span>
+                <span class="skill-tag"><i class="fas fa-mobile-alt"></i> 响应式设计</span>
+            </div>
+        </div>
+
+        <!-- 精选项目 (作品) -->
+        <div class="card-block" id="projects">
+            <div class="block-title">
+                <i class="fas fa-laptop-code"></i>
+                <span>精选项目</span>
+            </div>
+            <div class="project-grid">
+                <div class="project-item">
+                    <div class="project-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <h4>晨间笔记 · 极简日记</h4>
+                    <p>基于本地存储的私人日记工具，支持Markdown、夜间模式与每日格言。月活用户2W+。</p>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Flow 数据看板</h4>
+                    <p>开源数据可视化组件库，为中小团队提供轻量仪表板，设计获得2024年Figma社区奖。</p>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon"><i class="fas fa-leaf"></i></div>
+                    <h4>EcoPulse 碳足迹</h4>
+                    <p>交互式计算器 + 动态报告，帮助用户追踪日常碳足迹，采用地图API与动态图表。</p>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon"><i class="fas fa-cube"></i></div>
+                    <h4>Nord 设计系统</h4>
+                    <p>开源的UI套件与Figma设计资源库，被超过300个独立项目引用，主打冷色调舒适性。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 经历 & 里程碑 -->
+        <div class="card-block" id="timeline">
+            <div class="block-title">
+                <i class="fas fa-briefcase"></i>
+                <span>职业轨迹</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <div style="display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap;">
+                    <span style="font-weight: 600; min-width: 100px; color: #236b8e;"><i class="far fa-calendar-alt"></i> 2023 — 至今</span>
+                    <span><strong>资深前端工程师</strong> @ 灵感集科技 · 设计工具组，负责低代码编辑器和组件生态。</span>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap;">
+                    <span style="font-weight: 600; min-width: 100px; color: #236b8e;"><i class="far fa-calendar-alt"></i> 2020 — 2023</span>
+                    <span><strong>全栈开发 / 交互设计</strong> @ 白岛工作室，主导3款创意应用前端架构，同时兼任UI导师。</span>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap;">
+                    <span style="font-weight: 600; min-width: 100px; color: #236b8e;"><i class="far fa-calendar-alt"></i> 2018 — 2020</span>
+                    <span><strong>自由职业设计开发者</strong> 为海外中小品牌提供官网与设计系统，累计交付20+商业项目。</span>
+                </div>
+                <div style="display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap;">
+                    <span style="font-weight: 600; min-width: 100px; color: #236b8e;"><i class="fas fa-graduation-cap"></i> 教育</span>
+                    <span>中央美术学院 · 数字媒体艺术 (学士) + 辅修计算机科学与技术</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 联系 + 小寄语 -->
+        <div class="card-block" id="contact">
+            <div class="block-title">
+                <i class="fas fa-paper-plane"></i>
+                <span>联系与交流</span>
+            </div>
+            <div class="contact-line">
+                <div class="contact-info"><i class="fas fa-envelope-open-text"></i><span>yuchen.lin@creativ.dev</span></div>
+                <div class="contact-info"><i class="fab fa-telegram-plane"></i><span>@yuchen_lin</span></div>
+                <div class="contact-info"><i class="fas fa-map-marker-alt"></i><span>中国 · 上海</span></div>
+            </div>
+            <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #386f8c; border-left: 3px solid #89bed9; padding-left: 14px;">
+                开放合作与设计交流，欢迎邮件或私信～ 最近在撰写关于“现代网页美学趋势”的电子书。
+            </p>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i class="far fa-copyright"></i> 2026 林语晨 —— 保持纯粹，让设计自然呼吸
+    </div>
+</div>
+
+<!-- 添加一个非常轻量的平滑滚动增强 (确保滑动时锚点柔和, 同时增强分块体验) 无额外注释 -->
+<script>
+    (function() {
+        // 仅为增强点击平滑滚动以及内部卡片滑动感知，不添加任何外部注释风格代码块
+        const allLinks = document.querySelectorAll('a[href^="#"]');
+        allLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const hash = this.getAttribute('href');
+                if (hash === "#" || hash === "") return;
+                const target = document.querySelector(hash);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    history.pushState(null, null, hash);
+                }
+            });
+        });
+        // 增加一点点视觉效果: 滚动时轻微给可见卡片加微光 (纯装饰，保持简单)
+        const cards = document.querySelectorAll('.card-block');
+        if (cards.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transition = 'all 0.2s ease-out';
+                        entry.target.style.borderLeft = '3px solid #7bbbd9';
+                        setTimeout(() => {
+                            if (entry.target) entry.target.style.borderLeft = '';
+                        }, 500);
+                    } else {
+                        if (entry.target) entry.target.style.borderLeft = '';
+                    }
+                });
+            }, { threshold: 0.3 });
+            cards.forEach(card => observer.observe(card));
+        }
+    })();
+</script>
 </body>
 </html>
