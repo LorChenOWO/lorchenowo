@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>欢迎 - Foctax</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Comic Neue', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', cursive, sans-serif;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            padding-top: 60px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #0856a9;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .nav-title {
+            margin-left: 16px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-title:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1e4468 0%, #256293 100%);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            transition: left 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        .menu-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .close-menu {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .menu-items {
+            flex: 1;
+            padding: 16px 12px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #e8f0f8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .menu-item i {
+            width: 28px;
+            font-size: 1.2rem;
+            color: #8fcbff;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .menu-item:active {
+            transform: translateX(2px);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #d9eaf5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7bb3c9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5290b0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 0 1rem;
+        }
+
+        .avatar-frame {
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 35px -12px rgba(66, 153, 194, 0.25);
+            margin-bottom: 1.5rem;
+            transition: transform 0.25s ease;
+        }
+        .avatar-frame:hover {
+            transform: scale(1.02);
+        }
+        .avatar {
+            width: 118px;
+            height: 118px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-tag {
+            font-size: 1rem;
+            color: #3a6e8c;
+            background: rgba(115, 176, 204, 0.2);
+            backdrop-filter: blur(2px);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .bio {
+            max-width: 580px;
+            font-size: 1.05rem;
+            color: #2c4b64;
+            margin: 0.8rem auto 1.2rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .icon-links {
+            display: flex;
+            gap: 1.6rem;
+            justify-content: center;
+            margin: 1.2rem 0 0.5rem;
+            flex-wrap: wrap;
+        }
+        .icon-circle {
+            background: white;
+            width: 48px;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            color: #2c7da0;
+            box-shadow: 0 6px 14px rgba(48, 108, 142, 0.12);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .icon-circle:hover {
+            background: #d9effa;
+            color: #146b8f;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(43, 113, 144, 0.2);
+        }
+
+        .sections-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.2rem;
+        }
+
+        .card-block {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 10px 22px -8px rgba(70, 130, 160, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            scroll-margin-top: 80px;
+        }
+        .card-block:hover {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 20px 28px -12px rgba(52, 114, 142, 0.2);
+            border-color: #cae3ef;
+        }
+
+        .block-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.4rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #165a77;
+            letter-spacing: -0.2px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .block-title i {
+            font-size: 1.8rem;
+            color: #2d86ac;
+            background: #e0f0f8;
+            padding: 8px;
+            border-radius: 18px;
+            transition: transform 0.2s ease;
+        }
+        .block-title .toggle-icon {
+            margin-left: auto;
+            font-size: 1.2rem;
+            background: none;
+            color: #2d86ac;
+            transition: transform 0.3s ease;
+        }
+        .block-title:hover .toggle-icon {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, margin 0.3s ease;
+            max-height: 2000px;
+            opacity: 1;
+        }
+        .card-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #1f445c;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0 0.4rem;
+        }
+        .skill-tag {
+            background: #eef4fc;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #236b8e;
+            border: 1px solid #cbe2ef;
+            transition: all 0.2s;
+        }
+        .skill-tag i {
+            margin-right: 6px;
+            font-size: 0.8rem;
+        }
+
+        .contact-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffffba;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+        .contact-info i {
+            font-size: 1.2rem;
+            color: #2c7da0;
+            width: 28px;
+        }
+        .contact-info span {
+            font-weight: 500;
+            color: #1f5570;
+        }
+
+        .footer-note {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #608da5;
+            border-top: 1px solid #cce3ef;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.5rem 1.2rem 2.5rem;
+            }
+            .block-title {
+                font-size: 1.4rem;
+            }
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .card-block {
+                padding: 1.4rem 1.2rem;
+            }
+            .contact-line {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .side-menu {
+                width: 280px;
+                left: -280px;
+            }
+        }
+
+        .card-block {
+            transition: transform 0.2s ease, background 0.2s, box-shadow 0.2s;
+        }
+        
+        .icon-circle {
+            position: relative;
+        }
+
+        .icon-circle::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            padding: 6px 12px;
+            background: #b8e1fc;
+            color: #1a1a1a;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            border-radius: 20px;
+            border: 1px solid #8fcbff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+            font-family: 'Inter', sans-serif;
+            z-index: 100;
+        }
+
+        .icon-circle::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #b8e1fc transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .icon-circle:hover::before,
+        .icon-circle:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .icon-circle:hover::before {
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        .icon-circle:hover::after {
+            transform: translateX(-50%) translateY(1px);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: white;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-header {
+            background: #b8e1fc;
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            border-bottom: 1px solid #8fcbff;
+        }
+        .modal-body {
+            padding: 1.5rem;
+            color: #1f445c;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #b8e1fc;
+            color: #1a1a1a;
+        }
+        .modal-btn:hover {
+            background: #8fcbff;
+            transform: translateY(-2px);
+        }
+        .modal-btn:active {
+            transform: translateY(0);
+        }
+        .modal-btn.disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+        }
+        .modal-btn.disabled:hover {
+            background: #b8e1fc;
+            transform: none;
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out 0s 2;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cce3ef;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-family: 'Consolas', 'Comic Neue', monospace;
+            outline: none;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+        .password-input:focus {
+            border-color: #7bbbd9;
+            box-shadow: 0 0 0 3px rgba(123, 187, 217, 0.2);
+        }
+        
+        .toast-notification {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #ffe6e6;
+            border: 1px solid #ffaaaa;
+            border-radius: 40px;
+            padding: 12px 24px;
+            color: #cc3333;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1100;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <button class="menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-title" id="navTitle">
+        <i class="fas fa-home" style="margin-right: 8px;"></i>LorChen
+    </div>
+</div>
+
+<div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+        <h3><i class="fas fa-compass" style="margin-right: 8px;"></i>目录>></h3>
+        <button class="close-menu" id="closeMenuBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="menu-items" id="menuItems">
+    </div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<div class="container">
+    <div class="hero">
+        <div class="avatar-frame">
+            <img class="avatar" src="https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOjGnY7BcVKDjDskXR4zWUGtrxCrycAAKkHQACOb3IVjEgnK5NfOGZOwQ.jpg">
+        </div>
+        <h1>-洛程&凝洛-</h1>
+        <p style="font-size: 0.85rem; color: #6c8d9f; margin-top: -0.2rem; margin-bottom: 0.5rem; font-family:Consolas">@FoctaxForever</p>
+        <div class="hero-tag">
+            <i class="fas fa-code" style="margin-right: 6px;"></i> 苦逼高一生 | FURRY爱好者
+        </div>
+        <div class="bio">
+            你好呀~很高兴认识你OVO！
+        </div>
+        <div class="icon-links">
+            <a href="https://github.com/LorChenOWO" target="_blank" class="icon-circle" aria-label="GitHub" data-tooltip="Github"><i class="fab fa-github"></i></a>
+            <a href="https://space.bilibili.com/662040685" target="_blank" class="icon-circle" aria-label="bilibili" data-tooltip="我的B站"><i class="fab fa-bilibili"></i></a>
+        </div>
+    </div>
+
+    <div class="sections-grid">
+        <div class="card-block" id="section-about" data-collapsible="true" data-default-collapsed="false">
+            <div class="block-title">
+                <i class="fas fa-user"></i>
+                <span>关于我~</span>
+                <i class="fas fa-chevron-up toggle-icon"></i>
+            </div>
+            <div class="card-content">
+                <div class="about-text">
+                    <p>是一只蓝色的小福泥！福建厦门苦逼高一生ovo主混点编程啥的，菜鸡一个xwx</p>
+                    <p>cn洛程，叫我洛洛/小洛/小福泥什么的都行哦！</p>
+                    <p>术力口重度依赖（？）喜欢的p主有ぴーなた、MARETU、かいりきベア等~</p>
+                    <p>目前玩的游戏有minecraft啥的pwp事音游萌新，目前玩phi和舞萌，ut/fnf混圈，猫和老鼠侦探杰瑞重度爱好者pwp</p>
+                    <p>运动的话，咱喜欢骑行、跑步和羽球！<del>想找个羽球搭子qwq</del></p>
+                    <p>梦想是到各个地方去旅游！咱玩心超级重uwu</p>
+                    <p>很好说话不吃人ovo欢迎泥来交朋友~希望和大家成为超级好的好朋友nwn</p>
+                    <p>待补充中owo……</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-block" id="section-about2" data-collapsible="true" data-default-collapsed="true" data-need-password="true">
+            <div class="block-title">
+                <i class="fas fa-lock"></i>
+                <span>还是关于「我」……</span>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="card-content collapsed">
+                <div class="about-text">
+                    <p>大部分时间行为发言随性，有时候会比较负面qwq</p>
+                    <p>有一点心理疾病，不过有在慢慢好起来！感谢大家对咱的帮助（鞠躬）</p>
+                    <p>精神状态可能不太稳定，不过大部分时间都是很正常的，说话不会很激烈哒pwp</p>
+                    <p>讨厌自己。希望能用自己换大家的幸福快乐uwu</p>
+                    <p>逐渐从感性->理性发展。曾经的我也是很会安慰人的（哭）</p>
+                    <p>待补充……</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-block" id="section-skills" data-collapsible="true" data-default-collapsed="false">
+            <div class="block-title">
+                <i class="fas fa-cogs"></i>
+                <span>技术 & 工具~</span>
+                <i class="fas fa-chevron-up toggle-icon"></i>
+            </div>
+            <div class="card-content">
+                <div class="skills-wrap">
+                    <span class="skill-tag"><i class="fab fa-python"></i>python</span>
+                    <span class="skill-tag"><i class="fab fa-c"></i>C++</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-block" id="section-contact" data-collapsible="true" data-default-collapsed="false">
+            <div class="block-title">
+                <i class="fas fa-paper-plane"></i>
+                <span>联系方式~</span>
+                <i class="fas fa-chevron-up toggle-icon"></i>
+            </div>
+            <div class="card-content">
+                <div class="contact-line">
+                    <div class="contact-info"><i class="fas fa-envelope-open-text"></i><span>kousatsu_lor@outlook.com</span></div>
+                    <div class="contact-info"><i class="fab fa-qq"></i><span>3031004388</span></div>
+                    <div class="contact-info"><i class="fas fa-map-marker-alt"></i><span>福建 · 厦门</span></div>
+                </div>
+                <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #386f8c; border-left: 3px solid #89bed9; padding-left: 14px;">
+                    qq申请问题可以随便填哦ovo!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i>都看到这里啦，不交个朋友嘛ww？</i> 
+    </div>
+</div>
+
+<div class="modal-overlay" id="genericModal">
+    <div class="modal-container">
+        <div class="modal-header" id="modalHeader">
+            <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+            <span id="modalTitle">提示</span>
+        </div>
+        <div class="modal-body" id="modalBody">
+            确定要执行此操作吗？
+        </div>
+        <div class="modal-buttons" id="modalButtons">
+            <button class="modal-btn" id="modalConfirmBtn">确定</button>
+            <button class="modal-btn" id="modalCancelBtn">取消</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="passwordModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <i class="fas fa-key" style="margin-right: 8px;"></i>
+            <span id="passwordModalTitle">验证一下qwq</span>
+        </div>
+        <div class="modal-body">
+            <p id="passwordModalMessage">此栏目需要密码才能查看pwp~</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="密码就在页面上哦w?" autocomplete="off">
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn" id="passwordConfirmBtn">确定ovo!</button>
+            <button class="modal-btn" id="passwordCancelBtn">取消xwx!</button>
+        </div>
+    </div>
+</div>
+
+<div id="toastNotification" class="toast-notification">密码错误qwq！</div>
+
+<script>
+    (function() {
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        function openMenu() {
+            sideMenu.classList.add('open');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenu() {
+            sideMenu.classList.remove('open');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        menuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        const sections = [
+            { id: 'section-about', name: '关于我~', icon: 'fas fa-user' },
+            { id: 'section-about2', name: '还是关于「我」……', icon: 'fas fa-lock' },
+            { id: 'section-skills', name: '技术 & 工具~', icon: 'fas fa-cogs' },
+            { id: 'section-contact', name: '联系方式~', icon: 'fas fa-paper-plane' }
+        ];
+        
+        const menuItemsContainer = document.getElementById('menuItems');
+        sections.forEach(section => {
+            const item = document.createElement('div');
+            item.className = 'menu-item';
+            item.innerHTML = `<i class="${section.icon}"></i><span>${section.name}</span>`;
+            item.addEventListener('click', () => {
+                const target = document.getElementById(section.id);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    closeMenu();
+                }
+            });
+            menuItemsContainer.appendChild(item);
+        });
+        
+        const navTitle = document.getElementById('navTitle');
+        navTitle.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        const ENCODED_PASSWORD = "Rm9jdGF4Rm9yZXZlcg==";
+        
+        function verifyPassword(input) {
+            try {
+                const encodedInput = btoa(input);
+                return encodedInput === ENCODED_PASSWORD;
+            } catch(e) {
+                return false;
+            }
+        }
+        
+        function showToast(message, isError = true) {
+            const toast = document.getElementById('toastNotification');
+            if (isError) {
+                toast.style.background = '#ffe6e6';
+                toast.style.border = '1px solid #ffaaaa';
+                toast.style.color = '#cc3333';
+            } else {
+                toast.style.background = '#e6ffe6';
+                toast.style.border = '1px solid #aaffaa';
+                toast.style.color = '#338833';
+            }
+            toast.textContent = message;
+            toast.classList.remove('show');
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+        
+        class PasswordModal {
+            constructor() {
+                this.modal = document.getElementById('passwordModal');
+                this.confirmBtn = document.getElementById('passwordConfirmBtn');
+                this.cancelBtn = document.getElementById('passwordCancelBtn');
+                this.passwordInput = document.getElementById('passwordInput');
+                this.currentCallback = null;
+                this.setupEvents();
+            }
+            
+            setupEvents() {
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) {
+                        this.hide();
+                        if (this.currentCallback) this.currentCallback(false);
+                        this.currentCallback = null;
+                    }
+                });
+                
+                this.confirmBtn.addEventListener('click', () => {
+                    const password = this.passwordInput.value;
+                    const isValid = verifyPassword(password);
+                    
+                    if (isValid) {
+                        this.hide();
+                        if (this.currentCallback) {
+                            this.currentCallback(true);
+                            this.currentCallback = null;
+                        }
+                        this.passwordInput.value = '';
+                    } else {
+                        this.confirmBtn.classList.add('disabled');
+                        this.modal.classList.add('shake');
+                        setTimeout(() => {
+                            this.confirmBtn.classList.remove('disabled');
+                            this.modal.classList.remove('shake');
+                        }, 500);
+                        showToast('密码错误qwq！', true);
+                        this.passwordInput.value = '';
+                        this.passwordInput.focus();
+                    }
+                });
+                
+                this.cancelBtn.addEventListener('click', () => {
+                    this.hide();
+                    if (this.currentCallback) {
+                        this.currentCallback(false);
+                        this.currentCallback = null;
+                    }
+                    this.passwordInput.value = '';
+                });
+                
+                this.passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.confirmBtn.click();
+                    }
+                });
+            }
+            
+            show(options) {
+                const { title = '验证一下qwq', message = '此栏目需要密码才能查看qwq~', onSuccess, onCancel } = options;
+                
+                document.getElementById('passwordModalTitle').textContent = title;
+                document.getElementById('passwordModalMessage').textContent = message;
+                this.passwordInput.value = '';
+                
+                this.currentCallback = (success) => {
+                    if (success && onSuccess) onSuccess();
+                    if (!success && onCancel) onCancel();
+                };
+                
+                this.modal.classList.add('active');
+                setTimeout(() => {
+                    this.passwordInput.focus();
+                }, 100);
+            }
+            
+            hide() {
+                this.modal.classList.remove('active');
+            }
+        }
+        
+        const passwordModal = new PasswordModal();
+        
+        class Modal {
+            constructor() {
+                this.modal = document.getElementById('genericModal');
+                this.titleEl = document.getElementById('modalTitle');
+                this.bodyEl = document.getElementById('modalBody');
+                this.confirmBtn = document.getElementById('modalConfirmBtn');
+                this.cancelBtn = document.getElementById('modalCancelBtn');
+                this.currentCallback = null;
+                this.setupEvents();
+            }
+            
+            setupEvents() {
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) {
+                        this.hide();
+                    }
+                });
+                
+                this.confirmBtn.addEventListener('click', () => {
+                    if (this.currentCallback) {
+                        this.currentCallback(true);
+                        this.currentCallback = null;
+                    }
+                    this.hide();
+                });
+                
+                this.cancelBtn.addEventListener('click', () => {
+                    if (this.currentCallback) {
+                        this.currentCallback(false);
+                        this.currentCallback = null;
+                    }
+                    this.hide();
+                });
+            }
+            
+            show(options) {
+                const { title = '提示~!', content = '确定要执行这个操作嘛pwp?', confirmText = '嗯嗯!', cancelText = '不要!', onConfirm, onCancel } = options;
+                
+                this.titleEl.textContent = title;
+                this.bodyEl.textContent = content;
+                this.confirmBtn.textContent = confirmText;
+                this.cancelBtn.textContent = cancelText;
+                
+                this.currentCallback = (confirmed) => {
+                    if (confirmed && onConfirm) onConfirm();
+                    if (!confirmed && onCancel) onCancel();
+                };
+                
+                this.modal.classList.add('active');
+            }
+            
+            hide() {
+                this.modal.classList.remove('active');
+            }
+        }
+        
+        const modal = new Modal();
+        
+        class CollapsibleManager {
+            constructor() {
+                this.cards = document.querySelectorAll('.card-block[data-collapsible="true"]');
+                this.confirmedCards = new Set();
+                this.init();
+            }
+            
+            init() {
+                this.cards.forEach(card => {
+                    const title = card.querySelector('.block-title');
+                    const content = card.querySelector('.card-content');
+                    const toggleIcon = title.querySelector('.toggle-icon');
+                    const defaultCollapsed = card.getAttribute('data-default-collapsed') === 'true';
+                    const needPassword = card.getAttribute('data-need-password') === 'true';
+                    
+                    if (defaultCollapsed) {
+                        content.classList.add('collapsed');
+                        toggleIcon.classList.remove('fa-chevron-up');
+                        toggleIcon.classList.add('fa-chevron-down');
+                    } else {
+                        content.classList.remove('collapsed');
+                        toggleIcon.classList.remove('fa-chevron-down');
+                        toggleIcon.classList.add('fa-chevron-up');
+                    }
+                    
+                    card._config = {
+                        needPassword,
+                        cardId: card.id || `card_${Math.random().toString(36).substr(2, 9)}`
+                    };
+                    
+                    if (!card.id) card.id = card._config.cardId;
+                    
+                    title.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleCard(card);
+                    });
+                });
+            }
+            
+            toggleCard(card) {
+                const content = card.querySelector('.card-content');
+                const toggleIcon = card.querySelector('.toggle-icon');
+                const isCollapsed = content.classList.contains('collapsed');
+                const { needPassword, cardId } = card._config;
+                
+                if (isCollapsed && needPassword && !this.confirmedCards.has(cardId)) {
+                    passwordModal.show({
+                        title: '验证一下qwq',
+                        message: '这个栏目需要密码验证哦qwq?',
+                        onSuccess: () => {
+                            this.confirmedCards.add(cardId);
+                            this.performToggle(card, content, toggleIcon, true);
+                        },
+                        onCancel: () => {}
+                    });
+                } else {
+                    this.performToggle(card, content, toggleIcon, isCollapsed);
+                }
+            }
+            
+            performToggle(card, content, toggleIcon, isCollapsed) {
+                content.classList.toggle('collapsed');
+                if (toggleIcon.classList.contains('fa-chevron-up')) {
+                    toggleIcon.classList.remove('fa-chevron-up');
+                    toggleIcon.classList.add('fa-chevron-down');
+                } else {
+                    toggleIcon.classList.remove('fa-chevron-down');
+                    toggleIcon.classList.add('fa-chevron-up');
+                }
+            }
+        }
+        
+        const allLinks = document.querySelectorAll('a[href^="#"]');
+        allLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const hash = this.getAttribute('href');
+                if (hash === "#" || hash === "") return;
+                const target = document.querySelector(hash);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    history.pushState(null, null, hash);
+                }
+            });
+        });
+        
+        const cards = document.querySelectorAll('.card-block');
+        if (cards.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transition = 'all 0.2s ease-out';
+                        entry.target.style.borderLeft = '3px solid #7bbbd9';
+                        setTimeout(() => {
+                            if (entry.target) entry.target.style.borderLeft = '';
+                        }, 500);
+                    } else {
+                        if (entry.target) entry.target.style.borderLeft = '';
+                    }
+                });
+            }, { threshold: 0.3 });
+            cards.forEach(card => observer.observe(card));
+        }
+        
+        new CollapsibleManager();
+        
+        window.showModal = (options) => modal.show(options);
+    })();
+</script>
+</body>
+</html>
