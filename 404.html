@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ERROR! - Foctax</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Comic Neue', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', cursive, sans-serif;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #d9eaf5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7bb3c9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5290b0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .error-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border-radius: 3rem;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(52, 114, 142, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .error-card:hover {
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3);
+            border-color: #cae3ef;
+        }
+
+        .error-icon {
+            font-size: 6rem;
+            color: #7bbbd9;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .error-code {
+            font-size: 7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 8px;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #165a77;
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            max-width: 450px;
+            margin: 0 auto 1.5rem;
+            color: #3a6e8c;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .fox-sad {
+            font-size: 3rem;
+            margin: 0.5rem 0 1rem;
+            opacity: 0.7;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #b8e1fc;
+            color: #1a3a5c;
+            box-shadow: 0 4px 12px rgba(66, 153, 194, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #8fcbff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(66, 153, 194, 0.3);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #b8d6e8;
+            color: #2c7da0;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            transform: translateY(-3px);
+            border-color: #8fcbff;
+            box-shadow: 0 8px 20px rgba(66, 153, 194, 0.15);
+        }
+
+        .search-box {
+            margin-top: 1.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #cce3ef;
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.7rem 1.2rem;
+            border: 1px solid #cce3ef;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.8);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #7bbbd9;
+            box-shadow: 0 0 0 3px rgba(123, 187, 217, 0.2);
+            background: white;
+        }
+
+        .btn-search {
+            background: #b8e1fc;
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1a3a5c;
+        }
+
+        .btn-search:hover {
+            background: #8fcbff;
+            transform: translateY(-2px);
+        }
+
+        .fun-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .fun-link {
+            color: #608da5;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fun-link:hover {
+            color: #2c7da0;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #90aec2;
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .error-card {
+                padding: 2rem 1.5rem;
+            }
+            .error-code {
+                font-size: 5rem;
+                letter-spacing: 4px;
+            }
+            .error-title {
+                font-size: 1.4rem;
+            }
+            .button-group {
+                gap: 0.8rem;
+            }
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .error-icon:hover {
+            animation: wobble 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="error-card">
+        <div class="error-icon">
+            <i class="fas fa-map-signs"></i>
+        </div>
+        <div class="error-code">404</div>
+        <div class="error-title">页面不见啦~</div>
+        <div class="fox-sad">
+            <i class="fas fa-fox"></i> <i class="fas fa-question"></i>
+        </div>
+        <div class="error-message">
+            呜……你访问的页面好像被小福泥叼走了pwp<br>
+            它可能不存在、被移动了，或者输入错了网址=w=
+        </div>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> 返回首页
+            </a>
+            <a href="javascript:history.back()" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+        </div>
+
+        <div class="search-box">
+            <div class="search-input-group">
+                <input type="text" id="searchInput" class="search-input" placeholder="搜索一下试试看？" onkeypress="if(event.key==='Enter') searchSite()">
+                <button class="btn-search" onclick="searchSite()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="fun-links">
+            <a href="/" class="fun-link"><i class="fas fa-home"></i> 我要回家~</a>
+            <a href="#" class="fun-link" onclick="randomFact()"><i class="fas fa-dice-d6"></i> 传送OVO!</a>
+            <a href="#" class="fun-link" onclick="showSecret()"><i class="fas fa-star"></i> 这是什么OAO</a>
+        </div>
+
+        <div class="footer-note">
+            <i class="fas fa-paw"></i> 不要难过啦，小福泥陪着你~ <i class="fas fa-paw"></i>
+        </div>
+    </div>
+</div>
+
+<script>
+    function searchSite() {
+        const query = document.getElementById('searchInput').value.trim();
+        if (query === "") {
+            showToast('输入点什么再搜嘛~', false);
+            return;
+        }
+        showToast(`*你搜索了"${query}"。但什么也没有发生。\n你充满了决心。`, false);
+        document.getElementById('searchInput').value = '';
+    }
+
+    function randomFact() {
+        const randomPages = [
+            'https://github.com/LorChenOWO',
+            'https://space.bilibili.com/662040685',
+            '/',
+            '#'
+        ];
+        const randomIndex = Math.floor(Math.random() * randomPages.length);
+        const target = randomPages[randomIndex];
+        if (target === '#') {
+            showToast('好像传送到原地了呢！再试一次吧~', false);
+        } else if (target === '/') {
+            window.location.href = target;
+        } else {
+            window.open(target, '_blank');
+        }
+    }
+
+    let eggCount = 0;
+    function showSecret() {
+        eggCount++;
+        if (eggCount === 1) {
+            showToast('你发现了一个彩蛋OVO！再点几下试试？', false);
+        } else if (eggCount === 2) {
+            showToast('只要再点一下就好啦pwp……', false);
+        } else if (eggCount === 3) {
+            showToast('恭喜！获得一只小福泥~ 404也没关系啦！', false);
+            const foxSad = document.querySelector('.fox-sad');
+            if (foxSad) {
+                foxSad.style.animation = 'wobble 0.5s ease-in-out';
+                setTimeout(() => {
+                    if (foxSad) foxSad.style.animation = '';
+                }, 500);
+            }
+        } else {
+            showToast('你已经拥有一只小福泥啦！快去首页玩吧~', false);
+        }
+    }
+
+    function showToast(message, isError = false) {
+        const oldToast = document.querySelector('.toast-404');
+        if (oldToast) oldToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-404';
+        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: ${isError ? '#ffe6e6' : '#e6f4fa'};
+            border: 1px solid ${isError ? '#ffaaaa' : '#b8d6e8'};
+            color: ${isError ? '#cc3333' : '#2c7da0'};
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            font-family: inherit;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    }
+
+    const foxIcon = document.querySelector('.fox-sad');
+    if (foxIcon) {
+        foxIcon.addEventListener('mouseenter', () => {
+            foxIcon.style.transform = 'scale(1.1)';
+            foxIcon.style.transition = 'transform 0.2s ease';
+        });
+        foxIcon.addEventListener('mouseleave', () => {
+            foxIcon.style.transform = 'scale(1)';
+        });
+    }
+
+    console.log("%c你找到我啦OAO!", "color: #2c7da0; font-size: 16px; font-family: monospace;");
+    console.log("%c页面走丢啦，但小福泥还在陪着你哦~", "color: #7bbbd9; font-size: 12px;");
+	console.log("%c嘿嘿nwn~", "color: #7bbbd9; font-size: 12px;");
+</script>
+</body>
+</html>
