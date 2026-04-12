@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>BMI - Foctax</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Comic Neue', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', cursive, sans-serif;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .bmi-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border-radius: 2.5rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(52, 114, 142, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        .bmi-card:hover {
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3);
+            border-color: #cae3ef;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #7bbbd9;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        .card-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #608da5;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: #165a77;
+            font-size: 0.95rem;
+        }
+
+        .input-label i {
+            width: 24px;
+            color: #2c7da0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cce3ef;
+            border-radius: 60px;
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #7bbbd9;
+            box-shadow: 0 0 0 3px rgba(123, 187, 217, 0.2);
+            background: white;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            padding: 0.9rem 1.2rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            color: #1a2c3e;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #a8c4d6;
+        }
+
+        .input-unit {
+            padding: 0 1rem;
+            color: #608da5;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .unit-hint {
+            font-size: 0.7rem;
+            color: #90aec2;
+            margin-top: 0.3rem;
+            margin-left: 2rem;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: #b8e1fc;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 1.8rem 0 1.5rem;
+            font-family: inherit;
+        }
+
+        .calculate-btn:hover {
+            background: #8fcbff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(66, 153, 194, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-area {
+            background: linear-gradient(135deg, #eef4fc 0%, #e6f0f8 100%);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .bmi-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #165a77;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .bmi-status {
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .status-underweight {
+            background: #fff3e0;
+            color: #e6a017;
+            border: 1px solid #ffe0b3;
+        }
+        .status-normal {
+            background: #e0f7e8;
+            color: #2e7d5e;
+            border: 1px solid #b8e0cc;
+        }
+        .status-overweight {
+            background: #ffe6e0;
+            color: #e6733a;
+            border: 1px solid #ffd1b8;
+        }
+        .status-obese {
+            background: #ffe0e0;
+            color: #c0392b;
+            border: 1px solid #ffb8b8;
+        }
+
+        .advice-text {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #4a7c9c;
+            line-height: 1.5;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1rem;
+        }
+
+        .fox-tip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #cce3ef;
+            font-size: 0.75rem;
+            color: #7ba5c0;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #90aec2;
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        .reset-link {
+            background: none;
+            border: none;
+            color: #608da5;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            text-decoration: underline;
+            font-family: inherit;
+        }
+
+        .reset-link:hover {
+            color: #2c7da0;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+            .bmi-card {
+                padding: 1.5rem;
+            }
+            .bmi-value {
+                font-size: 2.2rem;
+            }
+            .card-header h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        .history-area {
+            margin-top: 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-title {
+            font-size: 0.75rem;
+            color: #7ba5c0;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.6rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 40px;
+            margin-bottom: 0.3rem;
+            font-size: 0.7rem;
+        }
+
+        .history-value {
+            font-weight: 600;
+            color: #2c7da0;
+        }
+
+        .clear-history {
+            background: none;
+            border: none;
+            color: #c0392b;
+            cursor: pointer;
+            font-size: 0.65rem;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .clear-history:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="bmi-card">
+        <div class="card-header">
+            <div class="card-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h1>BMI 计算器</h1>
+            <div class="subtitle">来看看泥的健康指数~</div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-label">
+                <i class="fas fa-arrows-up-down"></i>
+                <span>身高</span>
+            </div>
+            <div class="input-wrapper">
+                <input type="number" id="heightInput" placeholder="输入你的身高" step="0.1" value="">
+                <span class="input-unit">cm</span>
+            </div>
+            <div class="unit-hint">单位：厘米 (cm)</div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-label">
+                <i class="fas fa-weight-hanging"></i>
+                <span>体重</span>
+            </div>
+            <div class="input-wrapper">
+                <input type="number" id="weightInput" placeholder="输入你的体重" step="0.1" value="">
+                <span class="input-unit">kg</span>
+            </div>
+            <div class="unit-hint">单位：千克 (kg)</div>
+        </div>
+
+        <button class="calculate-btn" id="calculateBtn">
+            <i class="fas fa-calculator"></i> 点我点我ovo!
+        </button>
+
+        <div id="resultArea" class="result-area" style="display: none;">
+            <div class="bmi-value" id="bmiValue">--</div>
+            <div>
+                <span class="bmi-status" id="bmiStatus">--</span>
+            </div>
+            <div class="advice-text" id="adviceText">
+                输入身高和体重，点击计算~
+            </div>
+            <div class="fox-tip">
+                <i class="fas fa-fox"></i> 小福泥提醒：保持健康最重要哦~
+            </div>
+        </div>
+
+        <div class="history-area" id="historyArea" style="display: none;">
+            <div class="history-title">
+                <span><i class="fas fa-clock"></i> 最近记录</span>
+                <button class="clear-history" id="clearHistoryBtn"><i class="fas fa-trash-alt"></i> 清空</button>
+            </div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i class="fas fa-paw"></i> 仅供参考，有问题记得要去咨询医生哦OVO! <i class="fas fa-paw"></i>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const STORAGE_KEY = 'bmi_history';
+        
+        function getHistory() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch(e) {
+                    return [];
+                }
+            }
+            return [];
+        }
+        
+        function saveHistory(history) {
+            const limited = history.slice(0, 10);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(limited));
+        }
+        
+        function addHistoryRecord(bmi, status, height, weight) {
+            const history = getHistory();
+            const record = {
+                bmi: bmi.toFixed(1),
+                status: status,
+                height: height,
+                weight: weight,
+                date: new Date().toLocaleString()
+            };
+            history.unshift(record);
+            saveHistory(history);
+            renderHistory();
+        }
+        
+        function clearHistory() {
+            localStorage.removeItem(STORAGE_KEY);
+            renderHistory();
+        }
+        
+        function renderHistory() {
+            const history = getHistory();
+            const historyArea = document.getElementById('historyArea');
+            const historyList = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                historyArea.style.display = 'none';
+                return;
+            }
+            
+            historyArea.style.display = 'block';
+            historyList.innerHTML = '';
+            
+            history.forEach(record => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <span>${record.date.slice(5, 16)}</span>
+                    <span class="history-value">${record.bmi} (${record.status})</span>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+        
+        function calculateBMI(heightCm, weightKg) {
+            const heightM = heightCm / 100;
+            const bmi = weightKg / (heightM * heightM);
+            return Math.round(bmi * 10) / 10;
+        }
+        
+        function getStatusAndAdvice(bmi) {
+            if (bmi < 18.5) {
+                return {
+                    status: '太轻啦qwq!',
+                    statusClass: 'status-underweight',
+                    advice: '可以适当增加营养摄入，多吃蛋白质和健康脂肪。小福泥建议你规律作息，增强体质~'
+                };
+            } else if (bmi >= 18.5 && bmi < 24) {
+                return {
+                    status: '正常哦nwn!',
+                    statusClass: 'status-normal',
+                    advice: '非常棒！继续保持健康的饮食和运动习惯，小福泥为你点赞~'
+                };
+            } else if (bmi >= 24 && bmi < 28) {
+                return {
+                    status: '有点重pwp!',
+                    statusClass: 'status-overweight',
+                    advice: '可以适当增加运动量，调整饮食结构。小福泥陪你一起变得更好~'
+                };
+            } else {
+                return {
+                    status: '太重啦TAT!',
+                    statusClass: 'status-obese',
+                    advice: '建议咨询医生或营养师，制定科学的减重计划。小福泥相信你可以慢慢改善的！加油ovo！'
+                };
+            }
+        }
+        
+        function showResult(bmi, statusInfo) {
+            const resultArea = document.getElementById('resultArea');
+            const bmiValue = document.getElementById('bmiValue');
+            const bmiStatus = document.getElementById('bmiStatus');
+            const adviceText = document.getElementById('adviceText');
+            
+            bmiValue.textContent = bmi;
+            bmiStatus.textContent = statusInfo.status;
+            bmiStatus.className = `bmi-status ${statusInfo.statusClass}`;
+            adviceText.innerHTML = statusInfo.advice;
+            
+            resultArea.style.display = 'block';
+            
+            resultArea.style.animation = 'pulse 0.4s ease';
+            setTimeout(() => {
+                resultArea.style.animation = '';
+            }, 400);
+        }
+        
+        function showError(message) {
+            const resultArea = document.getElementById('resultArea');
+            const bmiValue = document.getElementById('bmiValue');
+            const bmiStatus = document.getElementById('bmiStatus');
+            const adviceText = document.getElementById('adviceText');
+            
+            bmiValue.textContent = '诶诶诶？！';
+            bmiStatus.textContent = '这不对叭OAO';
+            bmiStatus.className = 'bmi-status status-obese';
+            adviceText.innerHTML = `${message}<br>小福泥提醒您：体重为0的纸片人和身高为-1的黑洞是没法测出自己的BMI哒！`;
+            
+            resultArea.style.display = 'block';
+        }
+        
+        function showToast(message, isError = false) {
+            const oldToast = document.querySelector('.bmi-toast');
+            if (oldToast) oldToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'bmi-toast';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${isError ? '#ffe6e6' : '#e6f4fa'};
+                border: 1px solid ${isError ? '#ffaaaa' : '#b8d6e8'};
+                color: ${isError ? '#cc3333' : '#2c7da0'};
+                padding: 10px 20px;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                z-index: 1100;
+                backdrop-filter: blur(8px);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                font-family: inherit;
+                white-space: nowrap;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+        
+        function handleCalculate() {
+            const heightInput = document.getElementById('heightInput');
+            const weightInput = document.getElementById('weightInput');
+            
+            let height = parseFloat(heightInput.value);
+            let weight = parseFloat(weightInput.value);
+            
+            if (isNaN(height) || isNaN(weight)) {
+                showError('请输入身高和体重~');
+                return;
+            }
+            
+            if (height <= 0 || weight <= 0) {
+                showError('身高和体重必须是正数哦~');
+                return;
+            }
+            
+            if (height < 50 || height > 300) {
+                showError('这个身高已经不属于人类的范畴了吧OAO!');
+                return;
+            }
+            
+            if (weight < 10 || weight > 500) {
+                showError('这个体重……请验证你是否人类pwp!');
+                return;
+            }
+            
+            const bmi = calculateBMI(height, weight);
+            const statusInfo = getStatusAndAdvice(bmi);
+            
+            showResult(bmi, statusInfo);
+            addHistoryRecord(bmi, statusInfo.status, height, weight);
+            showToast(`BMI = ${bmi}，${statusInfo.status} 🎉`, false);
+        }
+        
+        function resetInputs() {
+            document.getElementById('heightInput').value = '';
+            document.getElementById('weightInput').value = '';
+            const resultArea = document.getElementById('resultArea');
+            resultArea.style.display = 'none';
+        }
+        
+        const calculateBtn = document.getElementById('calculateBtn');
+        calculateBtn.addEventListener('click', handleCalculate);
+        
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        if (clearHistoryBtn) {
+            clearHistoryBtn.addEventListener('click', () => {
+                clearHistory();
+                showToast('历史记录已清空~', false);
+            });
+        }
+        
+        const heightInput = document.getElementById('heightInput');
+        const weightInput = document.getElementById('weightInput');
+        
+        heightInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleCalculate();
+        });
+        weightInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleCalculate();
+        });
+        
+        renderHistory();
+    })();
+</script>
+</body>
+</html>

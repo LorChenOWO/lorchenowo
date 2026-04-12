@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Watermark - Foctax</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', 'WenQuanYi Micro Hei', monospace;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            17% { color: #ff8800; }
+            33% { color: #ffff00; }
+            50% { color: #00ff00; }
+            67% { color: #0088ff; }
+            83% { color: #8800ff; }
+            100% { color: #ff0000; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-2deg); }
+            75% { transform: translateX(10px) rotate(2deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .watermark-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 45px -12px rgba(52, 114, 142, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        .watermark-card:hover {
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3);
+            border-color: #cae3ef;
+        }
+
+        .top-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #cce3ef;
+        }
+
+        .btn-primary {
+            background: #4f8cff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .btn-primary:hover {
+            background: #2566d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 140, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(79, 140, 255, 0.2);
+            border: 1px solid #4f8cff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4f8cff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(79, 140, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .preview-area {
+            background: rgba(200, 220, 240, 0.3);
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-container {
+            background: #eaf2fb;
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 0.8rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: #90aec2;
+            padding: 3rem;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .preview-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .settings-panel {
+            background: rgba(200, 220, 240, 0.2);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .settings-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+
+        .setting-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .setting-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #165a77;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .slider-container {
+            background: #d0e7ff;
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #4f8cff;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #4f8cff;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #1a1e33;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #4f8cff;
+        }
+
+        .value-display {
+            font-size: 0.7rem;
+            color: #4f8cff;
+            margin-top: 0.2rem;
+            text-align: center;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .tip-text {
+            font-size: 0.65rem;
+            color: #90aec2;
+            text-align: center;
+            margin-top: 0.2rem;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .type-selector {
+            display: flex;
+            gap: 1rem;
+            background: #eaf2fb;
+            border-radius: 40px;
+            padding: 0.3rem;
+        }
+
+        .type-btn {
+            background: transparent;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .type-btn.active {
+            background: #4f8cff;
+            color: white;
+        }
+
+        .watermark-input {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cce3ef;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .watermark-input:focus {
+            border-color: #4f8cff;
+            box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
+            background: white;
+        }
+
+        .mystery-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        .mystery-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .loading-overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #cce3ef;
+            border-top-color: #4f8cff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .mystery-mode-active {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .rainbow-text {
+            animation: rainbow 2s linear infinite;
+        }
+
+        .fox-tip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #cce3ef;
+            font-size: 0.7rem;
+            color: #7ba5c0;
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.8rem;
+            }
+            .settings-row {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .setting-group {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="watermark-card">
+        <div class="top-bar">
+            <button class="btn-primary" id="uploadBtn">
+                <i class="fas fa-upload"></i> 点我上传图片ovo
+            </button>
+            <button class="btn-primary" id="saveBtn">
+                <i class="fas fa-save"></i> 点我保存nwn
+            </button>
+            <input type="file" id="fileInput" style="display: none;" accept="image/jpeg,image/png,image/jpg,image/gif,image/bmp">
+        </div>
+
+        <div class="preview-area">
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-placeholder" id="previewPlaceholder">
+                    <i class="fas fa-image"></i>
+                    <p>预览图在这里喔OAO!</p>
+                    <p style="font-size: 0.8rem;">上传图片后自动显示水印效果~</p>
+                </div>
+                <img id="previewImage" class="preview-image" style="display: none;">
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <div class="settings-row">
+                <div class="setting-group">
+                    <div class="setting-label">
+                        <i class="fas fa-tag"></i> 选择你的类型——
+                    </div>
+                    <div class="type-selector">
+                        <button class="type-btn active" data-type="text">📝 文字!</button>
+                        <button class="type-btn" data-type="image">🖼️ 图片!</button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label">
+                        <i class="fas fa-question-circle"></i> 这是啥?
+                    </div>
+                    <label class="mystery-checkbox">
+                        <input type="checkbox" id="mysteryMode">
+                        <span style="font-size: 0.85rem;">不要点我QAQ</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-row" id="textInputRow">
+                <div class="setting-group" style="flex: 2;">
+                    <div class="setting-label">
+                        <i class="fas fa-pencil-alt"></i> 你的标记——
+                    </div>
+                    <input type="text" id="watermarkText" class="watermark-input" placeholder="输入一个水印叭w~" value="洛程Foctax">
+                </div>
+            </div>
+
+            <div class="settings-row" id="imageInputRow" style="display: none;">
+                <div class="setting-group">
+                    <div class="setting-label">
+                        <i class="fas fa-image"></i> 水印图片——
+                    </div>
+                    <button class="btn-secondary" id="uploadWatermarkBtn">
+                        <i class="fas fa-upload"></i> 上传一张叭nwn
+                    </button>
+                    <input type="file" id="watermarkFileInput" style="display: none;" accept="image/jpeg,image/png,image/jpg,image/gif,image/bmp">
+                    <div id="watermarkStatus" style="font-size: 0.7rem; color: #90aec2; margin-top: 0.3rem; font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;"></div>
+                </div>
+            </div>
+
+            <div class="settings-row">
+                <div class="setting-group">
+                    <div class="setting-label"><i class="fas fa-expand"></i> 大小</div>
+                    <div class="slider-container">
+                        <input type="range" id="sizeSlider" min="0.05" max="0.5" step="0.01" value="0.15">
+                    </div>
+                    <div class="value-display" id="sizeValue">0.15</div>
+                    <div class="tip-text">(越往右边越大哦~)</div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label"><i class="fas fa-border-all"></i> 分布广度</div>
+                    <div class="slider-container">
+                        <input type="range" id="densitySlider" min="0.5" max="2.0" step="0.05" value="1.0">
+                    </div>
+                    <div class="value-display" id="densityValue">1.0</div>
+                    <div class="tip-text">(数值越大越稀疏哦~)</div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label"><i class="fas fa-tint"></i> 透明度</div>
+                    <div class="slider-container">
+                        <input type="range" id="opacitySlider" min="10" max="100" step="1" value="70">
+                    </div>
+                    <div class="value-display" id="opacityValue">70</div>
+                    <div class="tip-text">(这个还要解释嘛OWO?)</div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label"><i class="fas fa-arrows-alt-h"></i> 水平偏移</div>
+                    <div class="slider-container">
+                        <input type="range" id="offsetXSlider" min="-1.0" max="1.0" step="0.05" value="0.0">
+                    </div>
+                    <div class="value-display" id="offsetXValue">0.00</div>
+                    <div class="tip-text">(左右移动哦~)</div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-label"><i class="fas fa-arrows-alt-v"></i> 垂直偏移</div>
+                    <div class="slider-container">
+                        <input type="range" id="offsetYSlider" min="-1.0" max="1.0" step="0.05" value="0.0">
+                    </div>
+                    <div class="value-display" id="offsetYValue">0.00</div>
+                    <div class="tip-text">(左往上 右往下哦~)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fox-tip">
+            <i class="fas fa-fox"></i> 小福泥贴心提示：咱不会偷走你的照片哒nwn所有的处理均在浏览器本地完成哦~
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const uploadBtn = document.getElementById('uploadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const fileInput = document.getElementById('fileInput');
+        const watermarkFileInput = document.getElementById('watermarkFileInput');
+        const uploadWatermarkBtn = document.getElementById('uploadWatermarkBtn');
+        const previewImage = document.getElementById('previewImage');
+        const previewPlaceholder = document.getElementById('previewPlaceholder');
+        const watermarkText = document.getElementById('watermarkText');
+        const textInputRow = document.getElementById('textInputRow');
+        const imageInputRow = document.getElementById('imageInputRow');
+        const watermarkStatus = document.getElementById('watermarkStatus');
+        const mysteryCheckbox = document.getElementById('mysteryMode');
+        
+        const sizeSlider = document.getElementById('sizeSlider');
+        const densitySlider = document.getElementById('densitySlider');
+        const opacitySlider = document.getElementById('opacitySlider');
+        const offsetXSlider = document.getElementById('offsetXSlider');
+        const offsetYSlider = document.getElementById('offsetYSlider');
+        
+        const sizeValue = document.getElementById('sizeValue');
+        const densityValue = document.getElementById('densityValue');
+        const opacityValue = document.getElementById('opacityValue');
+        const offsetXValue = document.getElementById('offsetXValue');
+        const offsetYValue = document.getElementById('offsetYValue');
+        
+        let originalImage = null;
+        let watermarkImageObj = null;
+        let currentWatermarkType = 'text';
+        let isMysteryMode = false;
+        
+        function updateSliders() {
+            sizeValue.textContent = parseFloat(sizeSlider.value).toFixed(2);
+            densityValue.textContent = parseFloat(densitySlider.value).toFixed(2);
+            opacityValue.textContent = opacitySlider.value;
+            offsetXValue.textContent = parseFloat(offsetXSlider.value).toFixed(2);
+            offsetYValue.textContent = parseFloat(offsetYSlider.value).toFixed(2);
+        }
+        
+        sizeSlider.addEventListener('input', () => { updateSliders(); previewWatermark(); });
+        densitySlider.addEventListener('input', () => { updateSliders(); previewWatermark(); });
+        opacitySlider.addEventListener('input', () => { updateSliders(); previewWatermark(); });
+        offsetXSlider.addEventListener('input', () => { updateSliders(); previewWatermark(); });
+        offsetYSlider.addEventListener('input', () => { updateSliders(); previewWatermark(); });
+        
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentWatermarkType = btn.dataset.type;
+                if (currentWatermarkType === 'text') {
+                    textInputRow.style.display = 'flex';
+                    imageInputRow.style.display = 'none';
+                } else {
+                    textInputRow.style.display = 'none';
+                    imageInputRow.style.display = 'flex';
+                }
+                previewWatermark();
+            });
+        });
+        
+        watermarkText.addEventListener('input', () => previewWatermark());
+        
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        originalImage = img;
+                        previewWatermark();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        uploadWatermarkBtn.addEventListener('click', () => watermarkFileInput.click());
+        watermarkFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        watermarkImageObj = img;
+                        watermarkStatus.innerHTML = '<i class="fas fa-check-circle" style="color: #2e7d5e;"></i> 水印图片已上传~';
+                        previewWatermark();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        mysteryCheckbox.addEventListener('change', (e) => {
+            isMysteryMode = e.target.checked;
+            if (isMysteryMode) {
+                showToast('呜呜你点我了QAQ保存的时候会发生什么呢……', false);
+            } else {
+                showToast('神秘模式已关闭nwn', false);
+            }
+        });
+        
+        function displayPreview(imageDataUrl) {
+            previewImage.src = imageDataUrl;
+            previewImage.style.display = 'block';
+            previewPlaceholder.style.display = 'none';
+        }
+        
+        function showPlaceholder() {
+            previewImage.style.display = 'none';
+            previewPlaceholder.style.display = 'block';
+        }
+        
+        async function addWatermark(sourceImage) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = sourceImage.width;
+                canvas.height = sourceImage.height;
+                
+                ctx.drawImage(sourceImage, 0, 0);
+                
+                const sizeRatio = parseFloat(sizeSlider.value);
+                const densityCoef = parseFloat(densitySlider.value);
+                const opacity = parseInt(opacitySlider.value) / 100;
+                const offsetX = parseFloat(offsetXSlider.value);
+                const offsetY = parseFloat(offsetYSlider.value);
+                
+                const watermarkWidth = sourceImage.width * sizeRatio;
+                
+                if (currentWatermarkType === 'text') {
+                    const text = watermarkText.value || '水印';
+                    const fontSize = Math.max(12, watermarkWidth);
+                    ctx.font = `bold ${fontSize}px 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    
+                    const metrics = ctx.measureText(text);
+                    const textWidth = metrics.width;
+                    const textHeight = fontSize * 1.2;
+                    
+                    const spacingX = textWidth * densityCoef;
+                    const spacingY = textHeight * densityCoef;
+                    
+                    const startX = (sourceImage.width - spacingX) * (offsetX + 1) / 2;
+                    const startY = (sourceImage.height - spacingY) * (offsetY + 1) / 2;
+                    
+                    for (let y = startY; y < sourceImage.height; y += spacingY) {
+                        for (let x = startX; x < sourceImage.width; x += spacingX) {
+                            ctx.save();
+                            ctx.globalAlpha = opacity;
+                            ctx.fillStyle = '#ffffff';
+                            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                            ctx.shadowBlur = 2;
+                            ctx.fillText(text, x, y);
+                            ctx.restore();
+                        }
+                    }
+                } else if (currentWatermarkType === 'image' && watermarkImageObj) {
+                    const wmWidth = watermarkWidth;
+                    const wmHeight = watermarkImageObj.height * (wmWidth / watermarkImageObj.width);
+                    const spacingX = wmWidth * densityCoef;
+                    const spacingY = wmHeight * densityCoef;
+                    
+                    const startX = (sourceImage.width - spacingX) * (offsetX + 1) / 2;
+                    const startY = (sourceImage.height - spacingY) * (offsetY + 1) / 2;
+                    
+                    for (let y = startY; y < sourceImage.height; y += spacingY) {
+                        for (let x = startX; x < sourceImage.width; x += spacingX) {
+                            ctx.save();
+                            ctx.globalAlpha = opacity;
+                            ctx.drawImage(watermarkImageObj, x, y, wmWidth, wmHeight);
+                            ctx.restore();
+                        }
+                    }
+                }
+                
+                // 软件水印
+                ctx.font = `bold 22px 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace`;
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'bottom';
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 2;
+                ctx.fillStyle = 'rgba(180, 180, 180, 0.5)';
+                ctx.fillText('Foctax', canvas.width - 20, canvas.height - 15);
+                ctx.fillStyle = 'rgba(180, 180, 180, 0.3)';
+                ctx.fillText('Foctax', canvas.width - 22, canvas.height - 17);
+                
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    resolve({ url, blob });
+                }, 'image/png');
+            });
+        }
+        
+        async function previewWatermark() {
+            if (!originalImage) {
+                showPlaceholder();
+                return;
+            }
+            if (currentWatermarkType === 'image' && !watermarkImageObj) {
+                if (originalImage) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = originalImage.width;
+                    canvas.height = originalImage.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(originalImage, 0, 0);
+                    canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        displayPreview(url);
+                    }, 'image/png');
+                }
+                return;
+            }
+            
+            try {
+                const result = await addWatermark(originalImage);
+                displayPreview(result.url);
+            } catch(e) {
+                console.error('预览失败:', e);
+            }
+        }
+        
+        async function saveImage() {
+            if (!originalImage) {
+                showToast('请先上传图片呀xwx', true);
+                return;
+            }
+            if (currentWatermarkType === 'image' && !watermarkImageObj) {
+                showToast('请先上传水印图片呀xwx', true);
+                return;
+            }
+            
+            if (isMysteryMode) {
+                showMysteryMode();
+                return;
+            }
+            
+            try {
+                const result = await addWatermark(originalImage);
+                const link = document.createElement('a');
+                link.download = `watermarked_${Date.now()}.png`;
+                link.href = result.url;
+                link.click();
+                showToast('好诶~成功啦! 图片已保存~', false);
+            } catch(e) {
+                showToast('保存失败: ' + e.message, true);
+            }
+        }
+        
+        function showMysteryMode() {
+            const card = document.querySelector('.watermark-card');
+            card.classList.add('mystery-mode-active');
+            
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #222;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                cursor: pointer;
+            `;
+            
+            const text = document.createElement('div');
+            text.innerHTML = '哎呀!好奇心是很危险哒!<br><br>不过还好这是一只好福泥~<br><br>他帮你修好了网站哦~';
+            text.style.cssText = `
+                font-size: 3rem;
+                font-weight: bold;
+                text-align: center;
+                animation: rainbow 2s linear infinite;
+                font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+            `;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '点我逃出去吧~';
+            closeBtn.style.cssText = `
+                margin-top: 2rem;
+                padding: 0.8rem 2rem;
+                background: #4f8cff;
+                border: none;
+                border-radius: 40px;
+                color: white;
+                font-size: 1rem;
+                cursor: pointer;
+                font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+            `;
+            
+            overlay.appendChild(text);
+            overlay.appendChild(closeBtn);
+            document.body.appendChild(overlay);
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rainbow {
+                    0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+                    17% { color: #ff8800; text-shadow: 0 0 10px #ff8800; }
+                    33% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
+                    50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+                    67% { color: #0088ff; text-shadow: 0 0 10px #0088ff; }
+                    83% { color: #8800ff; text-shadow: 0 0 10px #8800ff; }
+                    100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            const closeMystery = () => {
+                overlay.remove();
+                style.remove();
+                card.classList.remove('mystery-mode-active');
+            };
+            
+            closeBtn.addEventListener('click', closeMystery);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeMystery();
+            });
+        }
+        
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${isError ? '#ffe6e6' : '#e6f4fa'};
+                border: 1px solid ${isError ? '#ffaaaa' : '#b8d6e8'};
+                color: ${isError ? '#cc3333' : '#2c7da0'};
+                padding: 10px 20px;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                z-index: 10000;
+                backdrop-filter: blur(8px);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', monospace;
+                white-space: nowrap;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+        
+        saveBtn.addEventListener('click', saveImage);
+        
+        updateSliders();
+        
+        showToast('来给自己的图片加个水印吧~', false);
+    })();
+</script>
+</body>
+</html>
