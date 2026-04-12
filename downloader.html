@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>小福泥文件站 | 洛程&凝洛Product</title>
+    <title>下载 - Foctax</title>
     <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
     <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
     <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -33,11 +33,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -65,7 +60,6 @@
             border-color: #cae3ef;
         }
 
-        /* 头部 */
         .header {
             text-align: center;
             margin-bottom: 2rem;
@@ -95,7 +89,6 @@
             color: #608da5;
         }
 
-        /* 工具栏 */
         .toolbar {
             display: flex;
             justify-content: space-between;
@@ -124,42 +117,12 @@
             font-size: 0.8rem;
             font-family: 'Consolas', '圆体', monospace;
             outline: none;
-            transition: all 0.2s;
         }
 
         .search-input:focus {
             border-color: #4f8cff;
             box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
             background: white;
-        }
-
-        .mirror-selector {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .mirror-btn {
-            background: rgba(79, 140, 255, 0.1);
-            border: 1px solid #cce3ef;
-            padding: 0.4rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Consolas', '圆体', monospace;
-        }
-
-        .mirror-btn.active {
-            background: #4f8cff;
-            border-color: #4f8cff;
-            color: white;
-        }
-
-        .mirror-btn:hover {
-            background: rgba(79, 140, 255, 0.3);
-            transform: translateY(-1px);
         }
 
         .refresh-btn {
@@ -169,7 +132,6 @@
             border-radius: 40px;
             font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -181,7 +143,6 @@
             transform: translateY(-1px);
         }
 
-        /* 统计信息 */
         .stats {
             display: flex;
             gap: 1rem;
@@ -191,9 +152,9 @@
             border-radius: 1rem;
             font-size: 0.75rem;
             color: #608da5;
+            flex-wrap: wrap;
         }
 
-        /* 文件列表 */
         .file-list {
             max-height: 500px;
             overflow-y: auto;
@@ -243,12 +204,6 @@
             word-break: break-all;
         }
 
-        .file-meta {
-            font-size: 0.7rem;
-            color: #90aec2;
-            margin-top: 0.2rem;
-        }
-
         .file-size {
             font-size: 0.7rem;
             color: #608da5;
@@ -276,7 +231,6 @@
             transform: translateY(-2px);
         }
 
-        /* 加载状态 */
         .loading-overlay {
             display: flex;
             align-items: center;
@@ -307,7 +261,38 @@
             opacity: 0.5;
         }
 
-        /* 页脚 */
+        .config-panel {
+            background: rgba(79, 140, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .config-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .config-label {
+            font-size: 0.75rem;
+            color: #165a77;
+            font-weight: 600;
+        }
+
+        .config-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cce3ef;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-family: 'Consolas', '圆体', monospace;
+        }
+
         .fox-tip {
             display: flex;
             align-items: center;
@@ -354,8 +339,27 @@
             <div class="header-icon">
                 <i class="fas fa-cloud-download-alt"></i>
             </div>
-            <h1>小福泥文件站</h1>
-            <div class="subtitle">洛程&凝洛Product · 资源下载中心</div>
+            <h1>Foctax文件站</h1>
+            <div class="subtitle">来下载文件吧nwn | 文件保存在GitHub仓库上zwz</div>
+        </div>
+
+        <div class="config-panel">
+            <div class="config-row">
+                <span class="config-label"><i class="fab fa-github"></i> GitHub 用户名：</span>
+                <input type="text" id="ownerInput" class="config-input" placeholder="例如: LorChenOWO" value="LorChenOWO">
+            </div>
+            <div class="config-row">
+                <span class="config-label"><i class="fas fa-database"></i> 仓库名：</span>
+                <input type="text" id="repoInput" class="config-input" placeholder="例如: my-files" value="LorChenOWO">
+                <span style="font-size:0.7rem; color:#90aec2;">.github.io</span>
+            </div>
+            <div class="config-row">
+                <span class="config-label"><i class="fas fa-folder"></i> 文件目录：</span>
+                <input type="text" id="pathInput" class="config-input" placeholder="例如: files" value="files">
+                <button class="refresh-btn" id="applyConfigBtn">
+                    <i class="fas fa-check"></i> 应用并加载
+                </button>
+            </div>
         </div>
 
         <div class="toolbar">
@@ -363,89 +367,32 @@
                 <i class="fas fa-search" style="color: #90aec2; align-self: center;"></i>
                 <input type="text" id="searchInput" class="search-input" placeholder="搜索文件..." onkeyup="filterFiles()">
             </div>
-            <div class="mirror-selector">
-                <span style="font-size:0.7rem; color:#608da5;">下载节点：</span>
-                <button class="mirror-btn active" data-mirror="auto">🚀 智能加速</button>
-                <button class="mirror-btn" data-mirror="jsdelivr">📦 jsDelivr</button>
-                <button class="mirror-btn" data-mirror="ghproxy">⚡ gh-proxy</button>
-                <button class="mirror-btn" data-mirror="ghps">🌐 ghps.cc</button>
-                <button class="mirror-btn" data-mirror="direct">🔗 直连</button>
-            </div>
             <button class="refresh-btn" id="refreshBtn">
                 <i class="fas fa-sync-alt"></i> 刷新列表
             </button>
         </div>
 
         <div class="stats" id="stats">
-            <span><i class="fas fa-database"></i> 正在加载...</span>
+            <span><i class="fas fa-database"></i> 等待加载...</span>
         </div>
 
         <div class="file-list" id="fileList">
             <div class="loading-overlay">
-                <div class="loading-spinner"></div>
-                <span>正在扫描文件目录...</span>
+                <i class="fas fa-folder-open" style="font-size: 2rem; opacity: 0.5;"></i>
+                <span>请在上方填写 GitHub 信息后点击"应用并加载"</span>
             </div>
         </div>
 
         <div class="fox-tip">
-            <i class="fas fa-fox"></i> 小福泥提示：文件来自 GitHub 仓库，使用国内镜像加速下载~ 点击文件名或下载按钮均可下载
+            <i class="fas fa-fox"></i> 小福泥提示：填写正确的 GitHub 用户名和仓库名后点击加载，文件会显示在下方的列表里~
         </div>
     </div>
 </div>
 
 <script>
-    // 配置
-    const REPO_OWNER = 'LorChenOWO';      // 替换为你的 GitHub 用户名
-    const REPO_NAME = 'lorchenowo';    // 替换为你的仓库名
-    const FILE_PATH = 'files';              // 文件所在文件夹
-    
-    // 注意：由于无法自动获取仓库信息，请手动修改上面的 REPO_OWNER 和 REPO_NAME
-    // 或者使用 GitHub API 自动获取当前页面的仓库信息
-    function getRepoInfo() {
-        // 方法1：从当前 URL 自动获取（适用于 username.github.io/repo-name/ 格式）
-        const pathParts = window.location.pathname.split('/');
-        if (pathParts.length >= 2 && pathParts[1] !== '') {
-            return {
-                owner: pathParts[1].split('.')[0] || REPO_OWNER,
-                repo: pathParts[1] === '' ? REPO_NAME : pathParts[1]
-            };
-        }
-        return { owner: REPO_OWNER, repo: REPO_NAME };
-    }
-    
-    const repoInfo = getRepoInfo();
-    const GITHUB_API = `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}/contents/${FILE_PATH}`;
-    
-    // 镜像配置
-    const mirrors = {
-        auto: (rawUrl) => getBestMirrorUrl(rawUrl),
-        jsdelivr: (rawUrl) => {
-            const match = rawUrl.match(/github\.com\/([^\/]+)\/([^\/]+)\/raw\/(.+)/);
-            if (match) {
-                return `https://cdn.jsdelivr.net/gh/${match[1]}/${match[2]}@main/${match[3]}`;
-            }
-            return rawUrl;
-        },
-        ghproxy: (rawUrl) => `https://mirror.ghproxy.com/${rawUrl}`,
-        ghps: (rawUrl) => `https://ghps.cc/${rawUrl}`,
-        direct: (rawUrl) => rawUrl
-    };
-    
-    let currentMirror = 'auto';
     let fileListData = [];
     let searchKeyword = '';
-    
-    // 智能选择最快镜像（基于地理位置）
-    function getBestMirrorUrl(rawUrl) {
-        // 国内用户优先使用 ghproxy
-        const userLang = navigator.language || 'zh-CN';
-        if (userLang.includes('zh')) {
-            return `https://mirror.ghproxy.com/${rawUrl}`;
-        }
-        return rawUrl;
-    }
-    
-    // 获取文件大小显示
+
     function formatFileSize(bytes) {
         if (bytes === undefined || bytes === null) return '未知大小';
         if (bytes === 0) return '0 B';
@@ -454,8 +401,7 @@
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
-    
-    // 根据文件扩展名获取图标
+
     function getFileIcon(filename) {
         const ext = filename.split('.').pop().toLowerCase();
         const icons = {
@@ -478,32 +424,20 @@
         };
         return icons[ext] || 'fa-file';
     }
-    
-    // 获取原始 GitHub 文件 URL
-    function getRawUrl(item) {
-        return `https://raw.githubusercontent.com/${repoInfo.owner}/${repoInfo.repo}/main/${FILE_PATH}/${item.name}`;
+
+    function getRawUrl(owner, repo, path, filename) {
+        return `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}/${filename}`;
     }
-    
-    // 获取下载 URL（使用镜像）
-    function getDownloadUrl(rawUrl) {
-        const mirrorFunc = mirrors[currentMirror];
-        return mirrorFunc(rawUrl);
-    }
-    
-    // 下载文件
-    async function downloadFile(item, event) {
+
+    async function downloadFile(item, owner, repo, path, event) {
         if (event) event.stopPropagation();
-        
-        const rawUrl = getRawUrl(item);
-        const downloadUrl = getDownloadUrl(rawUrl);
-        
-        showToast(`正在从 ${currentMirror} 节点下载...`, false);
-        
+        const rawUrl = getRawUrl(owner, repo, path, item.name);
+        showToast(`正在下载: ${item.name}`, false);
         try {
-            // 创建隐藏链接下载
             const link = document.createElement('a');
-            link.href = downloadUrl;
+            link.href = rawUrl;
             link.download = item.name;
+            link.target = '_blank';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -512,9 +446,8 @@
             showToast(`下载失败: ${e.message}`, true);
         }
     }
-    
-    // 渲染文件列表
-    function renderFileList() {
+
+    function renderFileList(owner, repo, path) {
         const fileListDiv = document.getElementById('fileList');
         const statsDiv = document.getElementById('stats');
         
@@ -530,36 +463,32 @@
                 <div class="empty-state">
                     <i class="fas fa-folder-open"></i>
                     <p>${fileListData.length === 0 ? '没有找到任何文件~' : '没有找到匹配的文件~'}</p>
-                    <p style="font-size:0.7rem; margin-top:0.5rem;">请确保仓库中存在 files 文件夹</p>
+                    <p style="font-size:0.7rem; margin-top:0.5rem;">请确保仓库中存在 ${path} 文件夹</p>
                 </div>
             `;
             statsDiv.innerHTML = `
                 <span><i class="fas fa-database"></i> 共 0 个文件</span>
-                <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
+                <span><i class="fas fa-folder"></i> ${owner}/${repo}/${path}</span>
             `;
             return;
         }
         
-        // 按文件名排序
         filteredFiles.sort((a, b) => a.name.localeCompare(b.name));
         
         fileListDiv.innerHTML = filteredFiles.map(file => `
-            <div class="file-item" onclick="downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, event)">
+            <div class="file-item" onclick="downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, '${owner}', '${repo}', '${path}', event)">
                 <div class="file-info">
                     <div class="file-icon">
                         <i class="fas ${getFileIcon(file.name)}"></i>
                     </div>
                     <div class="file-details">
                         <div class="file-name">${escapeHtml(file.name)}</div>
-                        <div class="file-meta">
-                            <i class="far fa-calendar-alt"></i> ${file.sha ? file.sha.substring(0, 7) : ''}
-                        </div>
                     </div>
                 </div>
                 <div class="file-size">
                     <i class="fas fa-hdd"></i> ${formatFileSize(file.size)}
                 </div>
-                <button class="download-btn" onclick="event.stopPropagation(); downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, event)">
+                <button class="download-btn" onclick="event.stopPropagation(); downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, '${owner}', '${repo}', '${path}', event)">
                     <i class="fas fa-download"></i> 下载
                 </button>
             </div>
@@ -567,110 +496,158 @@
         
         statsDiv.innerHTML = `
             <span><i class="fas fa-database"></i> 共 ${filteredFiles.length} 个文件</span>
-            <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
-            <span><i class="fas fa-cloud"></i> 镜像: ${currentMirror}</span>
+            <span><i class="fas fa-folder"></i> ${owner}/${repo}/${path}</span>
             ${searchKeyword ? `<span><i class="fas fa-search"></i> 筛选: ${searchKeyword}</span>` : ''}
         `;
     }
-    
+
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
-    
-    // 从 GitHub API 获取文件列表
-    async function fetchFileList() {
+
+    async function fetchFileListViaFileList(owner, repo, path) {
+        const filelistUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}/filelist.json`;
+        try {
+            const response = await fetch(filelistUrl);
+            if (response.ok) {
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    return data;
+                }
+            }
+        } catch (e) {
+            console.log('filelist.json 不存在');
+        }
+        return null;
+    }
+
+    async function fetchFileListViaJsDelivr(owner, repo, path) {
+        try {
+            const apiUrl = `https://api.jsdelivr.com/v1/jsdelivr/gh/${owner}/${repo}/`;
+            const response = await fetch(apiUrl);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.default && data.default.files) {
+                    const prefix = `${path}/`;
+                    const files = data.default.files
+                        .filter(file => file.name.startsWith(prefix) && !file.name.endsWith('/'))
+                        .map(file => ({
+                            name: file.name.replace(prefix, ''),
+                            size: file.size || 0,
+                            sha: file.hash || ''
+                        }));
+                    if (files.length > 0) {
+                        return files;
+                    }
+                }
+            }
+        } catch (e) {
+            console.log('jsDelivr API 失败:', e);
+        }
+        return null;
+    }
+
+    async function fetchFileListViaGitHubAPI(owner, repo, path) {
+        const apis = [
+            `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)}`
+        ];
+        
+        for (const api of apis) {
+            try {
+                const response = await fetch(api, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data)) {
+                        return data.filter(item => item.type === 'file').map(item => ({
+                            name: item.name,
+                            size: item.size || 0,
+                            sha: item.sha || ''
+                        }));
+                    }
+                }
+            } catch (e) {
+                console.log('API 尝试失败:', api);
+            }
+        }
+        return null;
+    }
+
+    async function loadFiles() {
+        const owner = document.getElementById('ownerInput').value.trim();
+        let repo = document.getElementById('repoInput').value.trim();
+        const path = document.getElementById('pathInput').value.trim();
+        
+        if (!owner || !repo) {
+            showToast('请填写 GitHub 用户名和仓库名', true);
+            return;
+        }
+        
+        if (repo.endsWith('.github.io')) {
+            repo = repo.replace('.github.io', '');
+        }
+        
         const fileListDiv = document.getElementById('fileList');
         const statsDiv = document.getElementById('stats');
         
         fileListDiv.innerHTML = `
             <div class="loading-overlay">
                 <div class="loading-spinner"></div>
-                <span>正在扫描文件目录...</span>
+                <span>正在获取文件列表...</span>
             </div>
         `;
         
-        try {
-            // 使用 GitHub API 获取文件列表
-            const response = await fetch(GITHUB_API);
-            
-            if (!response.ok) {
-                if (response.status === 404) {
-                    throw new Error(`找不到 files 文件夹，请确保仓库中存在 ${FILE_PATH} 目录`);
-                }
-                throw new Error(`API 请求失败: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            
-            if (!Array.isArray(data)) {
-                throw new Error('无效的 API 响应');
-            }
-            
-            // 过滤出文件（排除文件夹）
-            fileListData = data.filter(item => item.type === 'file');
-            
-            if (fileListData.length === 0) {
-                fileListDiv.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-folder-open"></i>
-                        <p>files 文件夹中没有找到文件~</p>
-                        <p style="font-size:0.7rem; margin-top:0.5rem;">请先上传文件到 ${FILE_PATH} 文件夹</p>
-                    </div>
-                `;
-                statsDiv.innerHTML = `
-                    <span><i class="fas fa-database"></i> 共 0 个文件</span>
-                    <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
-                `;
-                return;
-            }
-            
-            renderFileList();
-            showToast(`成功加载 ${fileListData.length} 个文件~`, false);
-            
-        } catch (error) {
-            console.error('获取文件列表失败:', error);
+        showToast(`正在加载 ${owner}/${repo}/${path}...`, false);
+        
+        let files = null;
+        
+        files = await fetchFileListViaFileList(owner, repo, path);
+        
+        if (!files) {
+            files = await fetchFileListViaJsDelivr(owner, repo, path);
+        }
+        
+        if (!files) {
+            files = await fetchFileListViaGitHubAPI(owner, repo, path);
+        }
+        
+        if (files && files.length > 0) {
+            fileListData = files;
+            renderFileList(owner, repo, path);
+            showToast(`成功加载 ${files.length} 个文件~`, false);
+        } else {
             fileListDiv.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <p>加载失败: ${error.message}</p>
+                    <p>无法获取文件列表</p>
                     <p style="font-size:0.7rem; margin-top:0.5rem;">
-                        请检查：
-                        <br>1. 仓库名和用户名是否正确
-                        <br>2. files 文件夹是否存在
-                        <br>3. GitHub API 是否可访问
+                        可能的原因：
+                        <br>1. 仓库名或用户名不正确
+                        <br>2. ${path} 文件夹不存在
+                        <br>3. 文件夹为空
                     </p>
-                    <button class="refresh-btn" style="margin-top:1rem;" onclick="fetchFileList()">
-                        <i class="fas fa-sync-alt"></i> 重试
-                    </button>
+                    <p style="font-size:0.7rem; margin-top:0.8rem; color:#4f8cff;">
+                        💡 建议：在 ${path} 文件夹中创建 filelist.json 文件
+                    </p>
                 </div>
             `;
-            statsDiv.innerHTML = `<span><i class="fas fa-exclamation-circle"></i> 加载失败，请检查配置</span>`;
+            statsDiv.innerHTML = `<span><i class="fas fa-exclamation-circle"></i> 加载失败，请检查配置或创建 filelist.json</span>`;
         }
     }
-    
-    // 筛选文件
+
     function filterFiles() {
         searchKeyword = document.getElementById('searchInput').value;
-        renderFileList();
+        const owner = document.getElementById('ownerInput').value.trim();
+        let repo = document.getElementById('repoInput').value.trim();
+        const path = document.getElementById('pathInput').value.trim();
+        if (repo.endsWith('.github.io')) repo = repo.replace('.github.io', '');
+        renderFileList(owner, repo, path);
     }
-    
-    // 切换镜像
-    function setMirror(mirror) {
-        currentMirror = mirror;
-        document.querySelectorAll('.mirror-btn').forEach(btn => {
-            if (btn.getAttribute('data-mirror') === mirror) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-        showToast(`已切换到 ${mirror} 下载节点`, false);
-        renderFileList();
-    }
-    
-    // 显示提示
+
     function showToast(message, isError = false) {
         const toast = document.createElement('div');
         toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
@@ -698,41 +675,30 @@
             setTimeout(() => toast.remove(), 300);
         }, 2500);
     }
-    
-    // 绑定镜像切换事件
+
     function bindEvents() {
-        document.querySelectorAll('.mirror-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                setMirror(btn.getAttribute('data-mirror'));
-            });
-        });
-        
-        document.getElementById('refreshBtn').addEventListener('click', () => {
-            fetchFileList();
-        });
-        
-        // 导出全局函数供 onclick 使用
+        document.getElementById('refreshBtn').addEventListener('click', loadFiles);
+        document.getElementById('applyConfigBtn').addEventListener('click', loadFiles);
         window.downloadFile = downloadFile;
         window.filterFiles = filterFiles;
-        window.fetchFileList = fetchFileList;
     }
-    
-    // 配置说明
-    function showConfigGuide() {
-        console.log('%c📁 小福泥文件站配置说明', 'color: #4f8cff; font-size: 14px;');
-        console.log('%c请修改代码开头的 REPO_OWNER 和 REPO_NAME 为你的 GitHub 信息', 'color: #e6a017; font-size: 12px');
-        console.log('%c确保仓库中存在 files 文件夹', 'color: #2e7d5e; font-size: 12px');
-    }
-    
-    // 初始化
-    function init() {
+
+    function autoLoad() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('owner')) document.getElementById('ownerInput').value = urlParams.get('owner');
+        if (urlParams.has('repo')) document.getElementById('repoInput').value = urlParams.get('repo');
+        if (urlParams.has('path')) document.getElementById('pathInput').value = urlParams.get('path');
+        
         bindEvents();
-        fetchFileList();
-        showConfigGuide();
-        showToast('小福泥文件站上线啦~ 点击文件即可下载！', false);
+        
+        const owner = document.getElementById('ownerInput').value;
+        const repo = document.getElementById('repoInput').value;
+        if (owner && repo && owner !== 'LorChenOWO') {
+            loadFiles();
+        }
     }
-    
-    init();
+
+    autoLoad();
 </script>
 </body>
 </html>
