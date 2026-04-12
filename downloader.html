@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>小福泥文件站 | 洛程&凝洛Product</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', monospace;
+            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
+            color: #1a2c3e;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 45px -12px rgba(52, 114, 142, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        .download-card:hover {
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3);
+            border-color: #cae3ef;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #cce3ef;
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            color: #7bbbd9;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #608da5;
+        }
+
+        /* 工具栏 */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem 1rem;
+            background: rgba(200, 220, 240, 0.3);
+            border-radius: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cce3ef;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-family: 'Consolas', '圆体', monospace;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #4f8cff;
+            box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
+            background: white;
+        }
+
+        .mirror-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .mirror-btn {
+            background: rgba(79, 140, 255, 0.1);
+            border: 1px solid #cce3ef;
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Consolas', '圆体', monospace;
+        }
+
+        .mirror-btn.active {
+            background: #4f8cff;
+            border-color: #4f8cff;
+            color: white;
+        }
+
+        .mirror-btn:hover {
+            background: rgba(79, 140, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .refresh-btn {
+            background: rgba(79, 140, 255, 0.15);
+            border: 1px solid #4f8cff;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Consolas', '圆体', monospace;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(79, 140, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* 统计信息 */
+        .stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(200, 220, 240, 0.2);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: #608da5;
+        }
+
+        /* 文件列表 */
+        .file-list {
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1rem;
+            margin-bottom: 0.6rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .file-item:hover {
+            background: rgba(184, 225, 252, 0.6);
+            transform: translateX(5px);
+        }
+
+        .file-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+            color: #2c7da0;
+            width: 40px;
+            text-align: center;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #165a77;
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .file-meta {
+            font-size: 0.7rem;
+            color: #90aec2;
+            margin-top: 0.2rem;
+        }
+
+        .file-size {
+            font-size: 0.7rem;
+            color: #608da5;
+            margin-right: 1rem;
+        }
+
+        .download-btn {
+            background: #4f8cff;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Consolas', '圆体', monospace;
+        }
+
+        .download-btn:hover {
+            background: #2566d8;
+            transform: translateY(-2px);
+        }
+
+        /* 加载状态 */
+        .loading-overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 3rem;
+            color: #2c7da0;
+        }
+
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #cce3ef;
+            border-top-color: #4f8cff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #90aec2;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* 页脚 */
+        .fox-tip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #cce3ef;
+            font-size: 0.7rem;
+            color: #7ba5c0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0.8rem;
+            }
+            .download-card {
+                padding: 1rem;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                max-width: none;
+            }
+            .file-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="download-card">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-cloud-download-alt"></i>
+            </div>
+            <h1>小福泥文件站</h1>
+            <div class="subtitle">洛程&凝洛Product · 资源下载中心</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search" style="color: #90aec2; align-self: center;"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="搜索文件..." onkeyup="filterFiles()">
+            </div>
+            <div class="mirror-selector">
+                <span style="font-size:0.7rem; color:#608da5;">下载节点：</span>
+                <button class="mirror-btn active" data-mirror="auto">🚀 智能加速</button>
+                <button class="mirror-btn" data-mirror="jsdelivr">📦 jsDelivr</button>
+                <button class="mirror-btn" data-mirror="ghproxy">⚡ gh-proxy</button>
+                <button class="mirror-btn" data-mirror="ghps">🌐 ghps.cc</button>
+                <button class="mirror-btn" data-mirror="direct">🔗 直连</button>
+            </div>
+            <button class="refresh-btn" id="refreshBtn">
+                <i class="fas fa-sync-alt"></i> 刷新列表
+            </button>
+        </div>
+
+        <div class="stats" id="stats">
+            <span><i class="fas fa-database"></i> 正在加载...</span>
+        </div>
+
+        <div class="file-list" id="fileList">
+            <div class="loading-overlay">
+                <div class="loading-spinner"></div>
+                <span>正在扫描文件目录...</span>
+            </div>
+        </div>
+
+        <div class="fox-tip">
+            <i class="fas fa-fox"></i> 小福泥提示：文件来自 GitHub 仓库，使用国内镜像加速下载~ 点击文件名或下载按钮均可下载
+        </div>
+    </div>
+</div>
+
+<script>
+    // 配置
+    const REPO_OWNER = 'LorChenOWO';      // 替换为你的 GitHub 用户名
+    const REPO_NAME = 'your-repo-name';    // 替换为你的仓库名
+    const FILE_PATH = 'files';              // 文件所在文件夹
+    
+    // 注意：由于无法自动获取仓库信息，请手动修改上面的 REPO_OWNER 和 REPO_NAME
+    // 或者使用 GitHub API 自动获取当前页面的仓库信息
+    function getRepoInfo() {
+        // 方法1：从当前 URL 自动获取（适用于 username.github.io/repo-name/ 格式）
+        const pathParts = window.location.pathname.split('/');
+        if (pathParts.length >= 2 && pathParts[1] !== '') {
+            return {
+                owner: pathParts[1].split('.')[0] || REPO_OWNER,
+                repo: pathParts[1] === '' ? REPO_NAME : pathParts[1]
+            };
+        }
+        return { owner: REPO_OWNER, repo: REPO_NAME };
+    }
+    
+    const repoInfo = getRepoInfo();
+    const GITHUB_API = `https://api.github.com/repos/${repoInfo.owner}/${repoInfo.repo}/contents/${FILE_PATH}`;
+    
+    // 镜像配置
+    const mirrors = {
+        auto: (rawUrl) => getBestMirrorUrl(rawUrl),
+        jsdelivr: (rawUrl) => {
+            const match = rawUrl.match(/github\.com\/([^\/]+)\/([^\/]+)\/raw\/(.+)/);
+            if (match) {
+                return `https://cdn.jsdelivr.net/gh/${match[1]}/${match[2]}@main/${match[3]}`;
+            }
+            return rawUrl;
+        },
+        ghproxy: (rawUrl) => `https://mirror.ghproxy.com/${rawUrl}`,
+        ghps: (rawUrl) => `https://ghps.cc/${rawUrl}`,
+        direct: (rawUrl) => rawUrl
+    };
+    
+    let currentMirror = 'auto';
+    let fileListData = [];
+    let searchKeyword = '';
+    
+    // 智能选择最快镜像（基于地理位置）
+    function getBestMirrorUrl(rawUrl) {
+        // 国内用户优先使用 ghproxy
+        const userLang = navigator.language || 'zh-CN';
+        if (userLang.includes('zh')) {
+            return `https://mirror.ghproxy.com/${rawUrl}`;
+        }
+        return rawUrl;
+    }
+    
+    // 获取文件大小显示
+    function formatFileSize(bytes) {
+        if (bytes === undefined || bytes === null) return '未知大小';
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    // 根据文件扩展名获取图标
+    function getFileIcon(filename) {
+        const ext = filename.split('.').pop().toLowerCase();
+        const icons = {
+            'jpg': 'fa-file-image', 'jpeg': 'fa-file-image', 'png': 'fa-file-image', 'gif': 'fa-file-image', 'bmp': 'fa-file-image', 'webp': 'fa-file-image',
+            'mp4': 'fa-file-video', 'avi': 'fa-file-video', 'mov': 'fa-file-video', 'mkv': 'fa-file-video',
+            'mp3': 'fa-file-audio', 'wav': 'fa-file-audio', 'flac': 'fa-file-audio',
+            'pdf': 'fa-file-pdf',
+            'doc': 'fa-file-word', 'docx': 'fa-file-word',
+            'xls': 'fa-file-excel', 'xlsx': 'fa-file-excel',
+            'ppt': 'fa-file-powerpoint', 'pptx': 'fa-file-powerpoint',
+            'zip': 'fa-file-archive', 'rar': 'fa-file-archive', '7z': 'fa-file-archive', 'tar': 'fa-file-archive', 'gz': 'fa-file-archive',
+            'txt': 'fa-file-alt', 'md': 'fa-file-alt',
+            'html': 'fa-code', 'css': 'fa-code', 'js': 'fa-code', 'json': 'fa-code',
+            'exe': 'fa-windows', 'msi': 'fa-windows',
+            'apk': 'fa-android',
+            'dmg': 'fa-apple',
+            'py': 'fa-python',
+            'java': 'fa-java',
+            'c': 'fa-code', 'cpp': 'fa-code', 'h': 'fa-code'
+        };
+        return icons[ext] || 'fa-file';
+    }
+    
+    // 获取原始 GitHub 文件 URL
+    function getRawUrl(item) {
+        return `https://raw.githubusercontent.com/${repoInfo.owner}/${repoInfo.repo}/main/${FILE_PATH}/${item.name}`;
+    }
+    
+    // 获取下载 URL（使用镜像）
+    function getDownloadUrl(rawUrl) {
+        const mirrorFunc = mirrors[currentMirror];
+        return mirrorFunc(rawUrl);
+    }
+    
+    // 下载文件
+    async function downloadFile(item, event) {
+        if (event) event.stopPropagation();
+        
+        const rawUrl = getRawUrl(item);
+        const downloadUrl = getDownloadUrl(rawUrl);
+        
+        showToast(`正在从 ${currentMirror} 节点下载...`, false);
+        
+        try {
+            // 创建隐藏链接下载
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = item.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast(`开始下载: ${item.name}`, false);
+        } catch (e) {
+            showToast(`下载失败: ${e.message}`, true);
+        }
+    }
+    
+    // 渲染文件列表
+    function renderFileList() {
+        const fileListDiv = document.getElementById('fileList');
+        const statsDiv = document.getElementById('stats');
+        
+        let filteredFiles = fileListData;
+        if (searchKeyword) {
+            filteredFiles = fileListData.filter(file => 
+                file.name.toLowerCase().includes(searchKeyword.toLowerCase())
+            );
+        }
+        
+        if (filteredFiles.length === 0) {
+            fileListDiv.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-folder-open"></i>
+                    <p>${fileListData.length === 0 ? '没有找到任何文件~' : '没有找到匹配的文件~'}</p>
+                    <p style="font-size:0.7rem; margin-top:0.5rem;">请确保仓库中存在 files 文件夹</p>
+                </div>
+            `;
+            statsDiv.innerHTML = `
+                <span><i class="fas fa-database"></i> 共 0 个文件</span>
+                <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
+            `;
+            return;
+        }
+        
+        // 按文件名排序
+        filteredFiles.sort((a, b) => a.name.localeCompare(b.name));
+        
+        fileListDiv.innerHTML = filteredFiles.map(file => `
+            <div class="file-item" onclick="downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, event)">
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas ${getFileIcon(file.name)}"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${escapeHtml(file.name)}</div>
+                        <div class="file-meta">
+                            <i class="far fa-calendar-alt"></i> ${file.sha ? file.sha.substring(0, 7) : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="file-size">
+                    <i class="fas fa-hdd"></i> ${formatFileSize(file.size)}
+                </div>
+                <button class="download-btn" onclick="event.stopPropagation(); downloadFile(${JSON.stringify(file).replace(/"/g, '&quot;')}, event)">
+                    <i class="fas fa-download"></i> 下载
+                </button>
+            </div>
+        `).join('');
+        
+        statsDiv.innerHTML = `
+            <span><i class="fas fa-database"></i> 共 ${filteredFiles.length} 个文件</span>
+            <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
+            <span><i class="fas fa-cloud"></i> 镜像: ${currentMirror}</span>
+            ${searchKeyword ? `<span><i class="fas fa-search"></i> 筛选: ${searchKeyword}</span>` : ''}
+        `;
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // 从 GitHub API 获取文件列表
+    async function fetchFileList() {
+        const fileListDiv = document.getElementById('fileList');
+        const statsDiv = document.getElementById('stats');
+        
+        fileListDiv.innerHTML = `
+            <div class="loading-overlay">
+                <div class="loading-spinner"></div>
+                <span>正在扫描文件目录...</span>
+            </div>
+        `;
+        
+        try {
+            // 使用 GitHub API 获取文件列表
+            const response = await fetch(GITHUB_API);
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error(`找不到 files 文件夹，请确保仓库中存在 ${FILE_PATH} 目录`);
+                }
+                throw new Error(`API 请求失败: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!Array.isArray(data)) {
+                throw new Error('无效的 API 响应');
+            }
+            
+            // 过滤出文件（排除文件夹）
+            fileListData = data.filter(item => item.type === 'file');
+            
+            if (fileListData.length === 0) {
+                fileListDiv.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <p>files 文件夹中没有找到文件~</p>
+                        <p style="font-size:0.7rem; margin-top:0.5rem;">请先上传文件到 ${FILE_PATH} 文件夹</p>
+                    </div>
+                `;
+                statsDiv.innerHTML = `
+                    <span><i class="fas fa-database"></i> 共 0 个文件</span>
+                    <span><i class="fas fa-folder"></i> 目录: ${FILE_PATH}</span>
+                `;
+                return;
+            }
+            
+            renderFileList();
+            showToast(`成功加载 ${fileListData.length} 个文件~`, false);
+            
+        } catch (error) {
+            console.error('获取文件列表失败:', error);
+            fileListDiv.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>加载失败: ${error.message}</p>
+                    <p style="font-size:0.7rem; margin-top:0.5rem;">
+                        请检查：
+                        <br>1. 仓库名和用户名是否正确
+                        <br>2. files 文件夹是否存在
+                        <br>3. GitHub API 是否可访问
+                    </p>
+                    <button class="refresh-btn" style="margin-top:1rem;" onclick="fetchFileList()">
+                        <i class="fas fa-sync-alt"></i> 重试
+                    </button>
+                </div>
+            `;
+            statsDiv.innerHTML = `<span><i class="fas fa-exclamation-circle"></i> 加载失败，请检查配置</span>`;
+        }
+    }
+    
+    // 筛选文件
+    function filterFiles() {
+        searchKeyword = document.getElementById('searchInput').value;
+        renderFileList();
+    }
+    
+    // 切换镜像
+    function setMirror(mirror) {
+        currentMirror = mirror;
+        document.querySelectorAll('.mirror-btn').forEach(btn => {
+            if (btn.getAttribute('data-mirror') === mirror) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        showToast(`已切换到 ${mirror} 下载节点`, false);
+        renderFileList();
+    }
+    
+    // 显示提示
+    function showToast(message, isError = false) {
+        const toast = document.createElement('div');
+        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: ${isError ? '#ffe6e6' : '#e6f4fa'};
+            border: 1px solid ${isError ? '#ffaaaa' : '#b8d6e8'};
+            color: ${isError ? '#cc3333' : '#2c7da0'};
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 10000;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-family: 'Consolas', '圆体', monospace;
+            white-space: nowrap;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    }
+    
+    // 绑定镜像切换事件
+    function bindEvents() {
+        document.querySelectorAll('.mirror-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setMirror(btn.getAttribute('data-mirror'));
+            });
+        });
+        
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            fetchFileList();
+        });
+        
+        // 导出全局函数供 onclick 使用
+        window.downloadFile = downloadFile;
+        window.filterFiles = filterFiles;
+        window.fetchFileList = fetchFileList;
+    }
+    
+    // 配置说明
+    function showConfigGuide() {
+        console.log('%c📁 小福泥文件站配置说明', 'color: #4f8cff; font-size: 14px;');
+        console.log('%c请修改代码开头的 REPO_OWNER 和 REPO_NAME 为你的 GitHub 信息', 'color: #e6a017; font-size: 12px');
+        console.log('%c确保仓库中存在 files 文件夹', 'color: #2e7d5e; font-size: 12px');
+    }
+    
+    // 初始化
+    function init() {
+        bindEvents();
+        fetchFileList();
+        showConfigGuide();
+        showToast('小福泥文件站上线啦~ 点击文件即可下载！', false);
+    }
+    
+    init();
+</script>
+</body>
+</html>
