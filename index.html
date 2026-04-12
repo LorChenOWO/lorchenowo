@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>欢迎 - Foctax</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>主站 - Foctax</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -22,6 +22,55 @@
             scroll-behavior: smooth;
             line-height: 1.5;
             padding-top: 60px;
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 0 1rem;
+        }
+
+        .hero .avatar-frame {
+            animation: fadeInDown 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            opacity: 0;
+        }
+
+        .hero h1 {
+            animation: fadeInDown 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.1s forwards;
+            opacity: 0;
+        }
+
+        .hero p {
+            animation: fadeInDown 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.15s forwards;
+            opacity: 0;
+        }
+
+        .hero .hero-tag {
+            animation: fadeInDown 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero .bio {
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.3s forwards;
+            opacity: 0;
+        }
+
+        .hero .icon-links {
+            animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.4s forwards;
+            opacity: 0;
         }
 
         .navbar {
@@ -200,15 +249,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1.5rem 4rem;
-        }
-
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 4rem;
-            padding: 2rem 0 1rem;
         }
 
         .avatar-frame {
@@ -634,6 +674,20 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cce3ef;
+            border-top-color: #4f8cff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -649,12 +703,16 @@
 
 <div class="side-menu" id="sideMenu">
     <div class="menu-header">
-        <h3><i class="fas fa-compass" style="margin-right: 8px;"></i>目录>></h3>
+        <h3><i class="fas fa-compass" style="margin-right: 8px;"></i>目录导航</h3>
         <button class="close-menu" id="closeMenuBtn">
             <i class="fas fa-times"></i>
         </button>
     </div>
     <div class="menu-items" id="menuItems">
+        <div class="menu-item" style="justify-content: center; background: none;">
+            <div class="loading-spinner"></div>
+            <span>正在扫描页面...</span>
+        </div>
     </div>
 </div>
 
@@ -796,6 +854,7 @@
         const sideMenu = document.getElementById('sideMenu');
         const menuOverlay = document.getElementById('menuOverlay');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const menuItemsContainer = document.getElementById('menuItems');
         
         function openMenu() {
             sideMenu.classList.add('open');
@@ -812,28 +871,6 @@
         menuBtn.addEventListener('click', openMenu);
         closeMenuBtn.addEventListener('click', closeMenu);
         menuOverlay.addEventListener('click', closeMenu);
-        
-        const sections = [
-            { id: 'section-about', name: '关于我~', icon: 'fas fa-user' },
-            { id: 'section-about2', name: '还是关于「我」……', icon: 'fas fa-lock' },
-            { id: 'section-skills', name: '技术 & 工具~', icon: 'fas fa-cogs' },
-            { id: 'section-contact', name: '联系方式~', icon: 'fas fa-paper-plane' }
-        ];
-        
-        const menuItemsContainer = document.getElementById('menuItems');
-        sections.forEach(section => {
-            const item = document.createElement('div');
-            item.className = 'menu-item';
-            item.innerHTML = `<i class="${section.icon}"></i><span>${section.name}</span>`;
-            item.addEventListener('click', () => {
-                const target = document.getElementById(section.id);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    closeMenu();
-                }
-            });
-            menuItemsContainer.appendChild(item);
-        });
         
         const navTitle = document.getElementById('navTitle');
         navTitle.addEventListener('click', () => {
@@ -1123,6 +1160,159 @@
         new CollapsibleManager();
         
         window.showModal = (options) => modal.show(options);
+        
+        // ==================== 页面检索功能 ====================
+        async function scanPages() {
+            const baseUrl = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+            const pageList = [];
+            
+            const commonPages = [
+                'index.html', '404.html', 'about.html', 'contact.html', 'projects.html',
+                'tools.html', 'download.html', 'music.html', 'bmi.html', 'python-runner.html',
+                'watermark.html', 'function-graph.html', 'file-station.html'
+            ];
+            
+            for (const page of commonPages) {
+                const pageUrl = baseUrl + page;
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 3000);
+                    const response = await fetch(pageUrl, { method: 'HEAD', signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    if (response.ok) {
+                        let name = page.replace('.html', '').replace(/_/g, ' ');
+                        name = name.charAt(0).toUpperCase() + name.slice(1);
+                        if (name === 'Index') name = '🏠 主页';
+                        pageList.push({ name: name, url: pageUrl, filename: page });
+                    }
+                } catch(e) {}
+            }
+            
+            const sitemapUrl = baseUrl + 'sitemap.json';
+            try {
+                const response = await fetch(sitemapUrl);
+                if (response.ok) {
+                    const sitemap = await response.json();
+                    if (Array.isArray(sitemap)) {
+                        for (const item of sitemap) {
+                            if (!pageList.some(p => p.filename === item.file)) {
+                                pageList.push({
+                                    name: item.name || item.file.replace('.html', ''),
+                                    url: baseUrl + item.file,
+                                    filename: item.file
+                                });
+                            }
+                        }
+                    }
+                }
+            } catch(e) {}
+            
+            const manualPages = [
+                { name: '📁 文件站', url: baseUrl + 'file-station.html', filename: 'file-station.html' },
+                { name: '🎵 音乐盒', url: baseUrl + 'music.html', filename: 'music.html' },
+                { name: '📊 BMI计算器', url: baseUrl + 'bmi.html', filename: 'bmi.html' },
+                { name: '🐍 Python运行器', url: baseUrl + 'python-runner.html', filename: 'python-runner.html' },
+                { name: '🖼️ 水印工具', url: baseUrl + 'watermark.html', filename: 'watermark.html' },
+                { name: '📈 函数图像', url: baseUrl + 'function-graph.html', filename: 'function-graph.html' }
+            ];
+            
+            for (const manual of manualPages) {
+                if (!pageList.some(p => p.filename === manual.filename)) {
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 2000);
+                        const response = await fetch(manual.url, { method: 'HEAD', signal: controller.signal });
+                        clearTimeout(timeoutId);
+                        if (response.ok) pageList.push(manual);
+                    } catch(e) {}
+                }
+            }
+            
+            const sections = [
+                { id: 'section-about', name: '📖 关于我~', icon: 'fas fa-user', isAnchor: true },
+                { id: 'section-about2', name: '🔒 还是关于「我」……', icon: 'fas fa-lock', isAnchor: true },
+                { id: 'section-skills', name: '⚙️ 技术 & 工具~', icon: 'fas fa-cogs', isAnchor: true },
+                { id: 'section-contact', name: '✉️ 联系方式~', icon: 'fas fa-paper-plane', isAnchor: true }
+            ];
+            
+            for (const section of sections) {
+                pageList.push({
+                    name: section.name,
+                    url: '#' + section.id,
+                    filename: section.id,
+                    isAnchor: true,
+                    icon: section.icon
+                });
+            }
+            
+            pageList.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+            
+            renderMenu(pageList);
+            
+            if (pageList.filter(p => !p.isAnchor).length > 0) {
+                showToast(`找到 ${pageList.filter(p => !p.isAnchor).length} 个子页面~`, false);
+            }
+        }
+        
+        function renderMenu(pages) {
+            menuItemsContainer.innerHTML = '';
+            
+            const pagesGroup = pages.filter(p => !p.isAnchor);
+            if (pagesGroup.length > 0) {
+                const groupTitle = document.createElement('div');
+                groupTitle.style.cssText = 'padding: 8px 16px; color: #8fcbff; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;';
+                groupTitle.innerHTML = '<i class="fas fa-globe"></i> 网站页面';
+                menuItemsContainer.appendChild(groupTitle);
+                
+                pagesGroup.forEach(page => {
+                    const item = document.createElement('div');
+                    item.className = 'menu-item';
+                    item.innerHTML = `<i class="fas fa-file-alt"></i><span>${page.name}</span>`;
+                    item.addEventListener('click', () => {
+                        window.location.href = page.url;
+                        closeMenu();
+                    });
+                    menuItemsContainer.appendChild(item);
+                });
+            }
+            
+            const anchorGroup = pages.filter(p => p.isAnchor);
+            if (anchorGroup.length > 0) {
+                const groupTitle = document.createElement('div');
+                groupTitle.style.cssText = 'padding: 8px 16px; color: #8fcbff; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 16px 0 8px;';
+                groupTitle.innerHTML = '<i class="fas fa-anchor"></i> 页面内锚点';
+                menuItemsContainer.appendChild(groupTitle);
+                
+                anchorGroup.forEach(anchor => {
+                    const item = document.createElement('div');
+                    item.className = 'menu-item';
+                    item.innerHTML = `<i class="${anchor.icon || 'fas fa-link'}"></i><span>${anchor.name}</span>`;
+                    item.addEventListener('click', () => {
+                        const target = document.getElementById(anchor.filename);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            closeMenu();
+                        }
+                    });
+                    menuItemsContainer.appendChild(item);
+                });
+            }
+            
+            if (pages.length === 0) {
+                menuItemsContainer.innerHTML = `
+                    <div class="menu-item" style="justify-content: center;">
+                        <span>没有找到其他页面~</span>
+                    </div>
+                `;
+            }
+            
+            const countBadge = document.createElement('div');
+            countBadge.style.cssText = 'padding: 12px 16px; text-align: center; font-size: 0.7rem; color: #90aec2; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px;';
+            countBadge.innerHTML = `<i class="fas fa-chart-line"></i> 共收录 ${pages.length} 个页面`;
+            menuItemsContainer.appendChild(countBadge);
+        }
+        
+        scanPages();
     })();
 </script>
 </body>
