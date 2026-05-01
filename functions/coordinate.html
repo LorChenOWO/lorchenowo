@@ -5,39 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>函数 - Foctax</title>
     <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
-    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
-    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Consolas', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', monospace;
-            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
-            color: #1a2c3e;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
         .graph-card {
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(8px);
@@ -48,213 +20,30 @@
             transition: all 0.3s ease;
             animation: fadeInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
         }
-
-        .graph-card:hover {
-            background: rgba(255, 255, 255, 0.94);
-            box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3);
-            border-color: #cae3ef;
-        }
-
-        .top-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed #cce3ef;
-            align-items: center;
-        }
-
-        .function-input-group {
-            flex: 2;
-            min-width: 250px;
-        }
-
-        .function-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #165a77;
-            margin-bottom: 0.3rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .function-input-wrapper {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .function-input {
-            flex: 1;
-            padding: 0.6rem 1rem;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid #cce3ef;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-family: 'Consolas', '圆体', monospace;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .function-input:focus {
-            border-color: #4f8cff;
-            box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
-            background: white;
-        }
-
-        .btn-primary {
-            background: #4f8cff;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Consolas', '圆体', monospace;
-        }
-
-        .btn-primary:hover {
-            background: #2566d8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 140, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(79, 140, 255, 0.15);
-            border: 1px solid #4f8cff;
-            padding: 0.6rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #4f8cff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Consolas', '圆体', monospace;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(79, 140, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .zoom-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .zoom-value {
-            font-size: 0.75rem;
-            color: #608da5;
-            background: rgba(200, 220, 240, 0.5);
-            padding: 0.3rem 0.8rem;
-            border-radius: 40px;
-        }
-
-        .canvas-area {
-            background: rgba(200, 220, 240, 0.3);
-            border-radius: 1.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .canvas-container {
-            background: #ffffff;
-            border-radius: 1rem;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            height: 500px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: grab;
-        }
-
-        canvas:active {
-            cursor: grabbing;
-        }
-
-        .info-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            background: rgba(200, 220, 240, 0.2);
-            border-radius: 1rem;
-        }
-
-        .info-text {
-            font-size: 0.7rem;
-            color: #90aec2;
-        }
-
-        .examples {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .example-btn {
-            background: rgba(79, 140, 255, 0.1);
-            border: 1px solid #cce3ef;
-            padding: 0.3rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Consolas', '圆体', monospace;
-        }
-
-        .example-btn:hover {
-            background: rgba(79, 140, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .fox-tip {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1rem;
-            padding-top: 0.8rem;
-            border-top: 1px dashed #cce3ef;
-            font-size: 0.7rem;
-            color: #7ba5c0;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 0.5rem;
-            }
-            .graph-card {
-                padding: 1rem;
-            }
-            .canvas-container {
-                height: 350px;
-            }
-            .top-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
+        .graph-card:hover { background: rgba(255, 255, 255, 0.94); box-shadow: 0 30px 50px -15px rgba(52, 114, 142, 0.3); }
+        .top-bar { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #cce3ef; align-items: center; }
+        .function-input-group { flex: 2; min-width: 250px; }
+        .function-label { font-size: 0.8rem; font-weight: 600; color: #165a77; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 6px; }
+        .function-input-wrapper { display: flex; gap: 0.5rem; }
+        .function-input { flex: 1; padding: 0.6rem 1rem; background: rgba(255, 255, 255, 0.7); border: 1px solid #cce3ef; border-radius: 40px; font-size: 0.9rem; font-family: monospace; outline: none; }
+        .function-input:focus { border-color: #4f8cff; box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2); background: white; }
+        .btn-primary { background: #4f8cff; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; font-size: 0.85rem; font-weight: 600; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { background: #2566d8; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79, 140, 255, 0.3); }
+        .btn-secondary { background: rgba(79, 140, 255, 0.15); border: 1px solid #4f8cff; padding: 0.6rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 500; color: #4f8cff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-secondary:hover { background: rgba(79, 140, 255, 0.3); transform: translateY(-2px); }
+        .zoom-controls { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+        .zoom-value { font-size: 0.75rem; color: #608da5; background: rgba(200, 220, 240, 0.5); padding: 0.3rem 0.8rem; border-radius: 40px; }
+        .canvas-area { background: rgba(200, 220, 240, 0.3); border-radius: 1.5rem; padding: 1rem; margin-bottom: 1rem; }
+        .canvas-container { background: #ffffff; border-radius: 1rem; overflow: hidden; width: 100%; height: 500px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.1); }
+        canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+        canvas:active { cursor: grabbing; }
+        .info-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.5rem; padding: 0.5rem; background: rgba(200, 220, 240, 0.2); border-radius: 1rem; }
+        .info-text { font-size: 0.7rem; color: #90aec2; }
+        .examples { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .example-btn { background: rgba(79, 140, 255, 0.1); border: 1px solid #cce3ef; padding: 0.3rem 0.8rem; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .example-btn:hover { background: rgba(79, 140, 255, 0.3); }
+        .fox-tip { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed #cce3ef; font-size: 0.7rem; color: #7ba5c0; }
+        @media (max-width: 768px) { .canvas-container { height: 350px; } .top-bar { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
@@ -262,483 +51,127 @@
     <div class="graph-card">
         <div class="top-bar">
             <div class="function-input-group">
-                <div class="function-label">
-                    <i class="fas fa-chart-line"></i> 函数↓ (注:写函数解析式就好啦~)
-                </div>
+                <div class="function-label"><i class="fas fa-chart-line"></i> 函数↓ (注:写函数解析式就好啦~)</div>
                 <div class="function-input-wrapper">
                     <input type="text" id="functionInput" class="function-input" placeholder="例如: sin(x), x^2, 2*x+1, e^x" value="sin(x)">
-                    <button class="btn-primary" id="drawBtn">
-                        <i class="fas fa-chart-line"></i> 绘制
-                    </button>
+                    <button class="btn-primary" id="drawBtn"><i class="fas fa-chart-line"></i> 绘制</button>
                 </div>
             </div>
             <div class="zoom-controls">
-                <button class="btn-secondary" id="zoomInBtn">
-                    <i class="fas fa-search-plus"></i> 放大
-                </button>
-                <button class="btn-secondary" id="zoomOutBtn">
-                    <i class="fas fa-search-minus"></i> 缩小
-                </button>
-                <button class="btn-secondary" id="resetViewBtn">
-                    <i class="fas fa-home"></i> 重置
-                </button>
+                <button class="btn-secondary" id="zoomInBtn"><i class="fas fa-search-plus"></i> 放大</button>
+                <button class="btn-secondary" id="zoomOutBtn"><i class="fas fa-search-minus"></i> 缩小</button>
+                <button class="btn-secondary" id="resetViewBtn"><i class="fas fa-home"></i> 重置</button>
                 <span class="zoom-value" id="zoomValue">缩放: 1.0x</span>
             </div>
         </div>
-
         <div class="canvas-area">
-            <div class="canvas-container">
-                <canvas id="graphCanvas" width="800" height="500" style="width:100%; height:100%;"></canvas>
-            </div>
+            <div class="canvas-container"><canvas id="graphCanvas" width="800" height="500"></canvas></div>
         </div>
-
         <div class="info-bar">
-            <div class="info-text">
-                <i class="fas fa-mouse-pointer"></i> 鼠标拖拽可以动哦~ | 滚轮放大缩小~
-            </div>
-            <div class="examples">
-                <span style="font-size:0.65rem; color:#90aec2;">试试这些吧:</span>
+            <div class="info-text"><i class="fas fa-mouse-pointer"></i> 鼠标拖拽可以动哦~ | 滚轮放大缩小~</div>
+            <div class="examples"><span style="font-size:0.65rem;">试试这些吧:</span>
                 <button class="example-btn" data-func="sin(x)">sin(x)</button>
                 <button class="example-btn" data-func="cos(x)">cos(x)</button>
                 <button class="example-btn" data-func="x^2">x²</button>
                 <button class="example-btn" data-func="x^3-3*x">x³-3x</button>
                 <button class="example-btn" data-func="tanh(x)">tanh(x)</button>
-                <button class="example-btn" data-func="1/(1+exp(-x))">sigmoid</button>
-                <button class="example-btn" data-func="abs(x)">|x|</button>
-                <button class="example-btn" data-func="sqrt(x)">√x</button>
             </div>
         </div>
-
-        <div class="fox-tip">
-            <i class="fas fa-fox"></i> 小福泥提示: 支持 + - * / ^ sin cos tan exp log sqrt abs 等函数哦~ | 变量必须是 x!
-        </div>
+        <div class="fox-tip"><i class="fas fa-fox"></i> 小福泥提示: 支持 + - * / ^ sin cos tan exp log sqrt abs 等函数哦~ | 变量必须是 x!</div>
     </div>
 </div>
-
 <script>
     (function() {
         const canvas = document.getElementById('graphCanvas');
         const ctx = canvas.getContext('2d');
-        const functionInput = document.getElementById('functionInput');
-        const drawBtn = document.getElementById('drawBtn');
-        const zoomInBtn = document.getElementById('zoomInBtn');
-        const zoomOutBtn = document.getElementById('zoomOutBtn');
-        const resetViewBtn = document.getElementById('resetViewBtn');
-        const zoomValueSpan = document.getElementById('zoomValue');
-        
-        let scale = 40.0;
-        let offsetX = 0.0;
-        let offsetY = 0.0;
-        
-        let canvasWidth = 800;
-        let canvasHeight = 500;
-        
-        let isDragging = false;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
-        
-        let currentFunc = null;
-        
+        let scale = 40, offsetX = 0, offsetY = 0, canvasWidth = 800, canvasHeight = 500, isDragging = false, lastMouseX = 0, lastMouseY = 0, currentFunc = null;
         function parseFunction(funcStr) {
             try {
-                let expr = funcStr.trim();
-                if (expr === "") {
-                    return null;
-                }
-                
-                expr = expr.replace(/\^/g, '**');
-                
-                expr = expr.replace(/(\d)([a-zA-Z\(])/g, '$1*$2');
-                expr = expr.replace(/(\))(\d|[a-zA-Z\(])/g, '$1*$2');
-                expr = expr.replace(/([a-zA-Z])(\d)/g, '$1*$2');
-                
-                expr = expr.replace(/sin\(/g, 'Math.sin(');
-                expr = expr.replace(/cos\(/g, 'Math.cos(');
-                expr = expr.replace(/tan\(/g, 'Math.tan(');
-                expr = expr.replace(/asin\(/g, 'Math.asin(');
-                expr = expr.replace(/acos\(/g, 'Math.acos(');
-                expr = expr.replace(/atan\(/g, 'Math.atan(');
-                expr = expr.replace(/sinh\(/g, 'Math.sinh(');
-                expr = expr.replace(/cosh\(/g, 'Math.cosh(');
-                expr = expr.replace(/tanh\(/g, 'Math.tanh(');
-                expr = expr.replace(/exp\(/g, 'Math.exp(');
-                expr = expr.replace(/log\(/g, 'Math.log(');
-                expr = expr.replace(/log10\(/g, 'Math.log10(');
-                expr = expr.replace(/sqrt\(/g, 'Math.sqrt(');
-                expr = expr.replace(/abs\(/g, 'Math.abs(');
-                expr = expr.replace(/floor\(/g, 'Math.floor(');
-                expr = expr.replace(/ceil\(/g, 'Math.ceil(');
-                expr = expr.replace(/pow\(/g, 'Math.pow(');
-                
-                expr = expr.replace(/pi/g, 'Math.PI');
-                expr = expr.replace(/e\b/g, 'Math.E');
-            
-                expr = expr.replace(/e\^(-?[0-9x\(\)\*\+\/\-\^]+)/g, 'Math.exp($1)');
-                expr = expr.replace(/e\^x/g, 'Math.exp(x)');
-                
-                const funcBody = `'use strict'; return (${expr});`;
-                
-                const fn = new Function('x', funcBody);
-                
-                fn(0);
-                fn(1);
-                fn(-1);
-                
-                return fn;
-            } catch (e) {
-                console.error('解析错误:', e);
-                return null;
-            }
+                let expr = funcStr.trim().replace(/\^/g, '**').replace(/(\d)([a-zA-Z\(])/g, '$1*$2').replace(/(\))(\d|[a-zA-Z\(])/g, '$1*$2');
+                expr = expr.replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(');
+                expr = expr.replace(/exp\(/g, 'Math.exp(').replace(/log\(/g, 'Math.log(').replace(/sqrt\(/g, 'Math.sqrt(');
+                expr = expr.replace(/abs\(/g, 'Math.abs(').replace(/pi/g, 'Math.PI').replace(/e\b/g, 'Math.E');
+                const fn = new Function('x', `'use strict'; return (${expr});`);
+                fn(0); fn(1); return fn;
+            } catch(e) { return null; }
         }
-    
         function updateCanvasSize() {
             const rect = canvas.parentElement.getBoundingClientRect();
-            canvasWidth = rect.width;
-            canvasHeight = rect.height;
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
+            canvasWidth = rect.width; canvasHeight = rect.height;
+            canvas.width = canvasWidth; canvas.height = canvasHeight;
             drawGridAndFunction();
         }
-        
-        function worldToScreen(x, y) {
-            return {
-                x: canvasWidth / 2 + x * scale + offsetX,
-                y: canvasHeight / 2 - y * scale + offsetY
-            };
-        }
-        
-        function screenToWorld(screenX, screenY) {
-            return {
-                x: (screenX - canvasWidth / 2 - offsetX) / scale,
-                y: (canvasHeight / 2 - screenY + offsetY) / scale
-            };
-        }
-        
+        function worldToScreen(x, y) { return { x: canvasWidth/2 + x*scale + offsetX, y: canvasHeight/2 - y*scale + offsetY }; }
+        function screenToWorld(screenX, screenY) { return { x: (screenX - canvasWidth/2 - offsetX)/scale, y: (canvasHeight/2 - screenY + offsetY)/scale }; }
         function drawGridAndFunction() {
             if (!ctx) return;
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            
-            const topLeft = screenToWorld(0, 0);
-            const bottomRight = screenToWorld(canvasWidth, canvasHeight);
-            const xMin = topLeft.x;
-            const xMax = bottomRight.x;
-            const yMin = bottomRight.y;
-            const yMax = topLeft.y;
-            
-            const xRange = xMax - xMin;
-            const yRange = yMax - yMin;
-            let xStep = Math.pow(10, Math.floor(Math.log10(xRange / 5)));
-            let yStep = Math.pow(10, Math.floor(Math.log10(yRange / 5)));
-            if (xStep < 0.1) xStep = 0.1;
-            if (yStep < 0.1) yStep = 0.1;
-            
+            const xMin = screenToWorld(0,0).x, xMax = screenToWorld(canvasWidth,0).x;
+            const yMin = screenToWorld(0,canvasHeight).y, yMax = screenToWorld(0,0).y;
+            let xStep = Math.pow(10, Math.floor(Math.log10((xMax-xMin)/5))), yStep = Math.pow(10, Math.floor(Math.log10((yMax-yMin)/5)));
+            if (xStep < 0.1) xStep = 0.1; if (yStep < 0.1) yStep = 0.1;
             ctx.save();
-            ctx.strokeStyle = '#d0d8e8';
-            ctx.lineWidth = 0.5;
-            
-            const xStart = Math.ceil(xMin / xStep) * xStep;
-            for (let x = xStart; x <= xMax; x += xStep) {
+            ctx.strokeStyle = '#d0d8e8'; ctx.lineWidth = 0.5;
+            for (let x = Math.ceil(xMin/xStep)*xStep; x <= xMax; x += xStep) {
                 const screen = worldToScreen(x, 0);
-                if (screen.x >= 0 && screen.x <= canvasWidth) {
-                    ctx.beginPath();
-                    ctx.moveTo(screen.x, 0);
-                    ctx.lineTo(screen.x, canvasHeight);
-                    ctx.stroke();
-                }
+                if (screen.x >= 0 && screen.x <= canvasWidth) { ctx.beginPath(); ctx.moveTo(screen.x, 0); ctx.lineTo(screen.x, canvasHeight); ctx.stroke(); }
             }
-            
-            const yStart = Math.ceil(yMin / yStep) * yStep;
-            for (let y = yStart; y <= yMax; y += yStep) {
+            for (let y = Math.ceil(yMin/yStep)*yStep; y <= yMax; y += yStep) {
                 const screen = worldToScreen(0, y);
-                if (screen.y >= 0 && screen.y <= canvasHeight) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, screen.y);
-                    ctx.lineTo(canvasWidth, screen.y);
-                    ctx.stroke();
-                }
+                if (screen.y >= 0 && screen.y <= canvasHeight) { ctx.beginPath(); ctx.moveTo(0, screen.y); ctx.lineTo(canvasWidth, screen.y); ctx.stroke(); }
             }
-            
-            ctx.beginPath();
-            ctx.strokeStyle = '#4a6a8a';
-            ctx.lineWidth = 1.5;
-            
-            const xAxisY = worldToScreen(0, 0).y;
-            if (xAxisY >= 0 && xAxisY <= canvasHeight) {
-                ctx.beginPath();
-                ctx.moveTo(0, xAxisY);
-                ctx.lineTo(canvasWidth, xAxisY);
-                ctx.stroke();
-            }
-            
-            const yAxisX = worldToScreen(0, 0).x;
-            if (yAxisX >= 0 && yAxisX <= canvasWidth) {
-                ctx.beginPath();
-                ctx.moveTo(yAxisX, 0);
-                ctx.lineTo(yAxisX, canvasHeight);
-                ctx.stroke();
-            }
-            
-            ctx.fillStyle = '#4a6a8a';
-            if (xAxisY >= 0 && xAxisY <= canvasHeight) {
-                ctx.beginPath();
-                ctx.moveTo(canvasWidth - 8, xAxisY - 4);
-                ctx.lineTo(canvasWidth, xAxisY);
-                ctx.lineTo(canvasWidth - 8, xAxisY + 4);
-                ctx.fill();
-            }
-            if (yAxisX >= 0 && yAxisX <= canvasWidth) {
-                ctx.beginPath();
-                ctx.moveTo(yAxisX - 4, 8);
-                ctx.lineTo(yAxisX, 0);
-                ctx.lineTo(yAxisX + 4, 8);
-                ctx.fill();
-            }
-            
-            ctx.font = `12px 'Consolas', '圆体', monospace`;
-            ctx.fillStyle = '#608da5';
-            
-            for (let x = xStart; x <= xMax; x += xStep) {
-                const screen = worldToScreen(x, 0);
-                if (screen.x >= 0 && screen.x <= canvasWidth && Math.abs(x) > 0.001) {
-                    ctx.save();
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = xAxisY > screen.y ? 'bottom' : 'top';
-                    const label = Math.abs(x - Math.round(x)) < 0.001 ? Math.round(x).toString() : x.toFixed(2);
-                    ctx.fillText(label, screen.x, xAxisY + (xAxisY > screen.y ? -4 : 12));
-                    ctx.restore();
-                }
-            }
-            
-            for (let y = yStart; y <= yMax; y += yStep) {
-                const screen = worldToScreen(0, y);
-                if (screen.y >= 0 && screen.y <= canvasHeight && Math.abs(y) > 0.001) {
-                    ctx.save();
-                    ctx.textAlign = yAxisX > screen.x ? 'left' : 'right';
-                    ctx.textBaseline = 'middle';
-                    const label = Math.abs(y - Math.round(y)) < 0.001 ? Math.round(y).toString() : y.toFixed(2);
-                    ctx.fillText(label, yAxisX + (yAxisX > screen.x ? 6 : -6), screen.y);
-                    ctx.restore();
-                }
-            }
-            
-            const originScreen = worldToScreen(0, 0);
-            if (originScreen.x >= 0 && originScreen.x <= canvasWidth && 
-                originScreen.y >= 0 && originScreen.y <= canvasHeight) {
-                ctx.fillStyle = '#4a6a8a';
-                ctx.beginPath();
-                ctx.arc(originScreen.x, originScreen.y, 4, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.fillStyle = '#608da5';
-                ctx.font = `bold 12px 'Consolas', '圆体', monospace`;
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'bottom';
-                ctx.fillText('0', originScreen.x - 6, originScreen.y - 4);
-            }
-            
+            ctx.beginPath(); ctx.strokeStyle = '#4a6a8a'; ctx.lineWidth = 1.5;
+            const xAxisY = worldToScreen(0,0).y;
+            if (xAxisY >= 0 && xAxisY <= canvasHeight) { ctx.beginPath(); ctx.moveTo(0, xAxisY); ctx.lineTo(canvasWidth, xAxisY); ctx.stroke(); }
+            const yAxisX = worldToScreen(0,0).x;
+            if (yAxisX >= 0 && yAxisX <= canvasWidth) { ctx.beginPath(); ctx.moveTo(yAxisX, 0); ctx.lineTo(yAxisX, canvasHeight); ctx.stroke(); }
             if (currentFunc) {
-                ctx.beginPath();
-                ctx.strokeStyle = '#4f8cff';
-                ctx.lineWidth = 2.5;
-                
+                ctx.beginPath(); ctx.strokeStyle = '#4f8cff'; ctx.lineWidth = 2.5;
                 let firstPoint = true;
-                
                 for (let px = 0; px <= canvasWidth; px++) {
                     const worldX = screenToWorld(px, 0).x;
-                    
                     try {
                         let yValue = currentFunc(worldX);
-                        
-                        if (isNaN(yValue) || !isFinite(yValue) || Math.abs(yValue) > 100) {
-                            firstPoint = true;
-                            continue;
-                        }
-                        
+                        if (isNaN(yValue) || !isFinite(yValue) || Math.abs(yValue) > 100) { firstPoint = true; continue; }
                         const screenY = worldToScreen(0, yValue).y;
-                        
                         if (screenY >= -50 && screenY <= canvasHeight + 50) {
-                            if (firstPoint) {
-                                ctx.moveTo(px, screenY);
-                                firstPoint = false;
-                            } else {
-                                ctx.lineTo(px, screenY);
-                            }
-                        } else {
-                            firstPoint = true;
-                        }
-                    } catch (e) {
-                        firstPoint = true;
-                    }
+                            if (firstPoint) { ctx.moveTo(px, screenY); firstPoint = false; }
+                            else { ctx.lineTo(px, screenY); }
+                        } else { firstPoint = true; }
+                    } catch(e) { firstPoint = true; }
                 }
-                
                 ctx.stroke();
             }
-            
             ctx.restore();
         }
-        
-        let drawTimeout = null;
-        function drawGraph() {
-            if (drawTimeout) clearTimeout(drawTimeout);
-            drawTimeout = setTimeout(() => {
-                drawGridAndFunction();
-            }, 10);
-        }
-        
-        function updateZoomDisplay() {
-            zoomValueSpan.textContent = `缩放: ${scale.toFixed(1)}x`;
-        }
-        
-        function zoomIn() {
-            scale = Math.min(scale * 1.2, 200);
-            updateZoomDisplay();
-            drawGraph();
-        }
-        
-        function zoomOut() {
-            scale = Math.max(scale / 1.2, 5);
-            updateZoomDisplay();
-            drawGraph();
-        }
-        
-        function resetView() {
-            scale = 40;
-            offsetX = 0;
-            offsetY = 0;
-            updateZoomDisplay();
-            drawGraph();
-        }
-        
+        function drawGraph() { drawGridAndFunction(); }
         function updateFunction() {
-            const funcStr = functionInput.value.trim();
-            if (funcStr === "") {
-                showToast('请输入函数表达式~', true);
-                return;
-            }
-            
-            const parsedFunc = parseFunction(funcStr);
-            
-            if (parsedFunc) {
-                currentFunc = parsedFunc;
-                drawGraph();
-                showToast(`f(x)=${funcStr} 绘制成功~`, false);
-            } else {
-                showToast(`函数解析失败: ${funcStr}\n | 变量必须为 x! qwq`, true);
-            }
+            const parsed = parseFunction(functionInput.value);
+            if (parsed) { currentFunc = parsed; drawGraph(); showToast(`f(x)=${functionInput.value} 绘制成功~`); }
+            else { showToast(`函数解析失败: ${functionInput.value}\n变量必须为 x!`, true); }
         }
-        
-        function showToast(message, isError = false) {
+        function showToast(msg, isErr = false) {
             const toast = document.createElement('div');
-            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${message}`;
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: ${isError ? '#ffe6e6' : '#e6f4fa'};
-                border: 1px solid ${isError ? '#ffaaaa' : '#b8d6e8'};
-                color: ${isError ? '#cc3333' : '#2c7da0'};
-                padding: 10px 20px;
-                border-radius: 40px;
-                font-size: 0.85rem;
-                font-weight: 500;
-                z-index: 10000;
-                backdrop-filter: blur(8px);
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                font-family: 'Consolas', '圆体', monospace;
-                white-space: nowrap;
-            `;
+            toast.innerHTML = `<i class="fas ${isErr ? 'fa-exclamation-triangle' : 'fa-heart'}"></i> ${msg}`;
+            toast.style.cssText = `position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:${isErr?'#ffe6e6':'#e6f4fa'};border:1px solid ${isErr?'#ffaaaa':'#b8d6e8'};color:${isErr?'#cc3333':'#2c7da0'};padding:10px 20px;border-radius:40px;font-size:0.85rem;z-index:10000;white-space:nowrap;`;
             document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
-        
-        function handleMouseDown(e) {
-            isDragging = true;
-            const rect = canvas.getBoundingClientRect();
-            lastMouseX = (e.clientX - rect.left) * (canvasWidth / rect.width);
-            lastMouseY = (e.clientY - rect.top) * (canvasHeight / rect.height);
-            canvas.style.cursor = 'grabbing';
-        }
-        
-        function handleMouseMove(e) {
-            if (!isDragging) return;
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = (e.clientX - rect.left) * (canvasWidth / rect.width);
-            const mouseY = (e.clientY - rect.top) * (canvasHeight / rect.height);
-            offsetX += mouseX - lastMouseX;
-            offsetY += mouseY - lastMouseY;
-            lastMouseX = mouseX;
-            lastMouseY = mouseY;
-            drawGraph();
-        }
-        
-        function handleMouseUp() {
-            isDragging = false;
-            canvas.style.cursor = 'grab';
-        }
-        
-        function handleWheel(e) {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = (e.clientX - rect.left) * (canvasWidth / rect.width);
-            const mouseY = (e.clientY - rect.top) * (canvasHeight / rect.height);
-            const beforeWorld = screenToWorld(mouseX, mouseY);
-            
-            const delta = e.deltaY > 0 ? 0.9 : 1.1;
-            let newScale = scale * delta;
-            if (newScale < 5) newScale = 5;
-            if (newScale > 200) newScale = 200;
-            scale = newScale;
-            
-            const afterWorld = screenToWorld(mouseX, mouseY);
-            offsetX += (afterWorld.x - beforeWorld.x) * scale;
-            offsetY -= (afterWorld.y - beforeWorld.y) * scale;
-            
-            updateZoomDisplay();
-            drawGraph();
-        }
-        
         function initEvents() {
-            window.addEventListener('resize', () => {
-                updateCanvasSize();
-                drawGraph();
-            });
-            
-            canvas.addEventListener('mousedown', handleMouseDown);
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-            canvas.addEventListener('wheel', handleWheel, { passive: false });
-            canvas.style.cursor = 'grab';
-            
+            window.addEventListener('resize', () => { updateCanvasSize(); drawGraph(); });
+            canvas.addEventListener('mousedown', e => { isDragging = true; const rect = canvas.getBoundingClientRect(); lastMouseX = (e.clientX-rect.left)*(canvasWidth/rect.width); lastMouseY = (e.clientY-rect.top)*(canvasHeight/rect.height); canvas.style.cursor = 'grabbing'; });
+            window.addEventListener('mousemove', e => { if(isDragging) { const rect = canvas.getBoundingClientRect(); const mx = (e.clientX-rect.left)*(canvasWidth/rect.width), my = (e.clientY-rect.top)*(canvasHeight/rect.height); offsetX += mx - lastMouseX; offsetY += my - lastMouseY; lastMouseX = mx; lastMouseY = my; drawGraph(); } });
+            window.addEventListener('mouseup', () => { isDragging = false; canvas.style.cursor = 'grab'; });
+            canvas.addEventListener('wheel', e => { e.preventDefault(); const rect = canvas.getBoundingClientRect(); const mx = (e.clientX-rect.left)*(canvasWidth/rect.width), my = (e.clientY-rect.top)*(canvasHeight/rect.height); const before = screenToWorld(mx, my); scale = Math.min(200, Math.max(5, scale * (e.deltaY > 0 ? 0.9 : 1.1))); const after = screenToWorld(mx, my); offsetX += (after.x - before.x) * scale; offsetY -= (after.y - before.y) * scale; document.getElementById('zoomValue').textContent = `缩放: ${scale.toFixed(1)}x`; drawGraph(); }, { passive: false });
             drawBtn.addEventListener('click', updateFunction);
-            zoomInBtn.addEventListener('click', zoomIn);
-            zoomOutBtn.addEventListener('click', zoomOut);
-            resetViewBtn.addEventListener('click', resetView);
-            
-            functionInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') updateFunction();
-            });
-            
-            document.querySelectorAll('.example-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    functionInput.value = btn.getAttribute('data-func');
-                    updateFunction();
-                });
-            });
+            zoomInBtn.addEventListener('click', () => { scale = Math.min(200, scale * 1.2); document.getElementById('zoomValue').textContent = `缩放: ${scale.toFixed(1)}x`; drawGraph(); });
+            zoomOutBtn.addEventListener('click', () => { scale = Math.max(5, scale / 1.2); document.getElementById('zoomValue').textContent = `缩放: ${scale.toFixed(1)}x`; drawGraph(); });
+            resetViewBtn.addEventListener('click', () => { scale = 40; offsetX = 0; offsetY = 0; document.getElementById('zoomValue').textContent = '缩放: 40.0x'; drawGraph(); });
+            functionInput.addEventListener('keypress', e => e.key === 'Enter' && updateFunction());
+            document.querySelectorAll('.example-btn').forEach(btn => btn.addEventListener('click', () => { functionInput.value = btn.dataset.func; updateFunction(); }));
         }
-        
-        function init() {
-            updateCanvasSize();
-            initEvents();
-            currentFunc = parseFunction('sin(x)');
-            updateZoomDisplay();
-            drawGraph();
-            showToast('试试输入不同的函数吧！', false);
-        }
-        
-        init();
+        const functionInput = document.getElementById('functionInput'), drawBtn = document.getElementById('drawBtn'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), resetViewBtn = document.getElementById('resetViewBtn');
+        updateCanvasSize(); initEvents(); currentFunc = parseFunction('sin(x)'); drawGraph();
     })();
 </script>
 </body>
