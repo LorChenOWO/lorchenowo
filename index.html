@@ -5,35 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>主站 - Foctax</title>
     <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
-    <link rel="preconnect" href="https://fonts.proxy.ustclug.org" crossorigin>
-    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Consolas', 'Comic Neue', '圆体', 'Yuanti SC', 'YouYuan', 'Microsoft YaHei', cursive, sans-serif;
-            background: linear-gradient(145deg, #f0f9ff 0%, #e6f4fa 100%);
-            color: #1a2c3e;
-            scroll-behavior: smooth;
-            line-height: 1.5;
-            padding-top: 60px;
-        }
-
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
         .hero {
             display: flex;
             flex-direction: column;
@@ -51,6 +26,13 @@
         .hero h1 {
             animation: fadeInDown 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) 0.1s forwards;
             opacity: 0;
+            font-size: 2.3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
         }
 
         .hero p {
@@ -73,184 +55,6 @@
             opacity: 0;
         }
 
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: #0856a9;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .menu-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .menu-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        .nav-title {
-            margin-left: 16px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 8px 12px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-title:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-        }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 300px;
-            height: 100vh;
-            background: linear-gradient(180deg, #1e4468 0%, #256293 100%);
-            backdrop-filter: blur(20px);
-            z-index: 1001;
-            transition: left 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .side-menu.open {
-            left: 0;
-        }
-
-        .menu-header {
-            padding: 24px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu-header h3 {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .close-menu {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.2s ease;
-        }
-
-        .close-menu:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        .menu-items {
-            flex: 1;
-            padding: 16px 12px;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            color: #e8f0f8;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .menu-item i {
-            width: 28px;
-            font-size: 1.2rem;
-            color: #8fcbff;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-
-        .menu-item:active {
-            transform: translateX(2px);
-        }
-
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #d9eaf5;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #7bb3c9;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #5290b0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 4rem;
-        }
-
         .avatar-frame {
             width: 130px;
             height: 130px;
@@ -263,9 +67,7 @@
             margin-bottom: 1.5rem;
             transition: transform 0.25s ease;
         }
-        .avatar-frame:hover {
-            transform: scale(1.02);
-        }
+        .avatar-frame:hover { transform: scale(1.02); }
         .avatar {
             width: 118px;
             height: 118px;
@@ -273,17 +75,6 @@
             object-fit: cover;
             border: 3px solid white;
             box-shadow: 0 5px 12px rgba(0,0,0,0.05);
-        }
-
-        .hero h1 {
-            font-size: 2.3rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #1f5e7e, #3282a0);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
         }
 
         .hero-tag {
@@ -327,170 +118,13 @@
             box-shadow: 0 6px 14px rgba(48, 108, 142, 0.12);
             transition: all 0.2s ease;
             text-decoration: none;
+            position: relative;
         }
         .icon-circle:hover {
             background: #d9effa;
             color: #146b8f;
             transform: translateY(-3px);
             box-shadow: 0 12px 20px rgba(43, 113, 144, 0.2);
-        }
-
-        .sections-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2.2rem;
-        }
-
-        .card-block {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(2px);
-            border-radius: 2rem;
-            padding: 1.8rem 2rem;
-            box-shadow: 0 10px 22px -8px rgba(70, 130, 160, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            transition: all 0.3s;
-            scroll-margin-top: 80px;
-        }
-        .card-block:hover {
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 20px 28px -12px rgba(52, 114, 142, 0.2);
-            border-color: #cae3ef;
-        }
-
-        .block-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 1.4rem;
-            font-size: 1.7rem;
-            font-weight: 600;
-            color: #165a77;
-            letter-spacing: -0.2px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .block-title i {
-            font-size: 1.8rem;
-            color: #2d86ac;
-            background: #e0f0f8;
-            padding: 8px;
-            border-radius: 18px;
-            transition: transform 0.2s ease;
-        }
-        .block-title .toggle-icon {
-            margin-left: auto;
-            font-size: 1.2rem;
-            background: none;
-            color: #2d86ac;
-            transition: transform 0.3s ease;
-        }
-        .block-title:hover .toggle-icon {
-            transform: scale(1.1);
-        }
-
-        .card-content {
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, margin 0.3s ease;
-            max-height: 2000px;
-            opacity: 1;
-        }
-        .card-content.collapsed {
-            max-height: 0;
-            opacity: 0;
-            margin: 0;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-            color: #1f445c;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .skills-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 1.2rem 0 0.4rem;
-        }
-        .skill-tag {
-            background: #eef4fc;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #236b8e;
-            border: 1px solid #cbe2ef;
-            transition: all 0.2s;
-        }
-        .skill-tag i {
-            margin-right: 6px;
-            font-size: 0.8rem;
-        }
-
-        .contact-line {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 0.8rem;
-        }
-        .contact-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #ffffffba;
-            padding: 0.6rem 1.2rem;
-            border-radius: 60px;
-            backdrop-filter: blur(2px);
-        }
-        .contact-info i {
-            font-size: 1.2rem;
-            color: #2c7da0;
-            width: 28px;
-        }
-        .contact-info span {
-            font-weight: 500;
-            color: #1f5570;
-        }
-
-        .footer-note {
-            margin-top: 3.5rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #608da5;
-            border-top: 1px solid #cce3ef;
-            padding-top: 2rem;
-        }
-
-        @media (max-width: 680px) {
-            .container {
-                padding: 1.5rem 1.2rem 2.5rem;
-            }
-            .block-title {
-                font-size: 1.4rem;
-            }
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-            .card-block {
-                padding: 1.4rem 1.2rem;
-            }
-            .contact-line {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            .side-menu {
-                width: 280px;
-                left: -280px;
-            }
-        }
-
-        .card-block {
-            transition: transform 0.2s ease, background 0.2s, box-shadow 0.2s;
-        }
-        
-        .icon-circle {
-            position: relative;
         }
 
         .icon-circle::before {
@@ -536,14 +170,188 @@
             opacity: 1;
             visibility: visible;
         }
+        .icon-circle:hover::before { transform: translateX(-50%) translateY(-8px); }
+        .icon-circle:hover::after { transform: translateX(-50%) translateY(1px); }
 
-        .icon-circle:hover::before {
-            transform: translateX(-50%) translateY(-8px);
+        .sections-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.2rem;
         }
 
-        .icon-circle:hover::after {
-            transform: translateX(-50%) translateY(1px);
+        .block-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.4rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #165a77;
+            letter-spacing: -0.2px;
+            cursor: pointer;
+            user-select: none;
         }
+        .block-title i {
+            font-size: 1.8rem;
+            color: #2d86ac;
+            background: #e0f0f8;
+            padding: 8px;
+            border-radius: 18px;
+            transition: transform 0.2s ease;
+        }
+        .block-title .toggle-icon {
+            margin-left: auto;
+            font-size: 1.2rem;
+            background: none;
+            color: #2d86ac;
+            transition: transform 0.3s ease;
+        }
+        .block-title:hover .toggle-icon { transform: scale(1.1); }
+
+        .card-content {
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, margin 0.3s ease;
+            max-height: 2000px;
+            opacity: 1;
+        }
+        .card-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #1f445c;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0 0.4rem;
+        }
+        .skill-tag {
+            background: #eef4fc;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #236b8e;
+            border: 1px solid #cbe2ef;
+            transition: all 0.2s;
+        }
+        .skill-tag i { margin-right: 6px; font-size: 0.8rem; }
+
+        .contact-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffffba;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+        .contact-info i { font-size: 1.2rem; color: #2c7da0; width: 28px; }
+        .contact-info span { font-weight: 500; color: #1f5570; }
+
+        .swipe-section { margin-top: 1rem; }
+        .swipe-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        .swipe-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1.2rem;
+            padding: 0.5rem 0.2rem 1rem;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .swipe-wrapper::-webkit-scrollbar { height: 6px; }
+        .swipe-wrapper::-webkit-scrollbar-track { background: #d9eaf5; border-radius: 10px; }
+        .swipe-wrapper::-webkit-scrollbar-thumb { background: #7bb3c9; border-radius: 10px; }
+        .swipe-card {
+            flex: 0 0 280px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+        }
+        .swipe-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-5px);
+            border-color: #8fcbff;
+            box-shadow: 0 10px 25px -10px rgba(66, 153, 194, 0.3);
+        }
+        .swipe-card-icon { font-size: 2.5rem; color: #2c7da0; margin-bottom: 1rem; }
+        .swipe-card-title { font-size: 1.2rem; font-weight: 600; color: #165a77; margin-bottom: 0.5rem; }
+        .swipe-card-desc { font-size: 0.75rem; color: #608da5; line-height: 1.4; }
+        .swipe-nav { display: flex; justify-content: center; gap: 0.8rem; margin-top: 1rem; }
+        .swipe-nav-btn {
+            background: rgba(184, 225, 252, 0.5);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #2c7da0;
+            font-size: 1rem;
+        }
+        .swipe-nav-btn:hover { background: #8fcbff; transform: scale(1.05); }
+
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #608da5;
+            border-top: 1px solid #cce3ef;
+            padding-top: 2rem;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.3); transform: scale(1.02); }
+
+        .nav-title {
+            margin-left: 16px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .nav-title:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-1px); }
 
         .modal-overlay {
             position: fixed;
@@ -561,10 +369,7 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-container {
             background: white;
             border-radius: 1.5rem;
@@ -575,9 +380,7 @@
             transform: scale(0.9);
             transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-container { transform: scale(1); }
         .modal-header {
             background: #b8e1fc;
             padding: 1rem 1.5rem;
@@ -586,17 +389,8 @@
             color: #1a1a1a;
             border-bottom: 1px solid #8fcbff;
         }
-        .modal-body {
-            padding: 1.5rem;
-            color: #1f445c;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            padding: 0 1.5rem 1.5rem 1.5rem;
-        }
+        .modal-body { padding: 1.5rem; color: #1f445c; font-size: 1rem; line-height: 1.5; }
+        .modal-buttons { display: flex; gap: 1rem; padding: 0 1.5rem 1.5rem 1.5rem; }
         .modal-btn {
             flex: 1;
             padding: 0.6rem;
@@ -609,84 +403,126 @@
             background: #b8e1fc;
             color: #1a1a1a;
         }
-        .modal-btn:hover {
-            background: #8fcbff;
-            transform: translateY(-2px);
-        }
-        .modal-btn:active {
-            transform: translateY(0);
-        }
-        .modal-btn.disabled {
-            opacity: 0.6;
-            transform: none;
-            cursor: not-allowed;
-        }
-        .modal-btn.disabled:hover {
-            background: #b8e1fc;
-            transform: none;
-        }
-        .shake {
-            animation: shake 0.3s ease-in-out 0s 2;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
+        .modal-btn:hover { background: #8fcbff; transform: translateY(-2px); }
+        .modal-btn.disabled { opacity: 0.6; transform: none; cursor: not-allowed; }
+
         .password-input {
             width: 100%;
             padding: 10px 14px;
             border: 1px solid #cce3ef;
             border-radius: 40px;
             font-size: 0.9rem;
-            font-family: 'Consolas', 'Comic Neue', monospace;
+            font-family: 'Consolas', monospace;
             outline: none;
             transition: all 0.2s ease;
             margin-top: 8px;
-            box-sizing: border-box;
         }
         .password-input:focus {
             border-color: #7bbbd9;
             box-shadow: 0 0 0 3px rgba(123, 187, 217, 0.2);
         }
-        
-        .toast-notification {
-            position: fixed;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #ffe6e6;
-            border: 1px solid #ffaaaa;
-            border-radius: 40px;
-            padding: 12px 24px;
-            color: #cc3333;
-            font-size: 0.9rem;
-            font-weight: 500;
-            z-index: 1100;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
+
+        .arrow-icon {
+            display: inline-block;
+            margin: 0 8px;
+            animation: arrowBlink 1.5s ease-in-out infinite;
+            color: #ff6b6b;
         }
-        .toast-notification.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        @keyframes arrowBlink {
+            0% { opacity: 0.6; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(3px); }
+            100% { opacity: 0.6; transform: translateX(0); }
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #cce3ef;
-            border-top-color: #4f8cff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        @keyframes nonlinearMove {
+            0% { transform: translateX(0); text-shadow: 0 0 0px rgba(0,0,0,0.1); }
+            30% { transform: translateX(8px) scale(1.02); }
+            70% { transform: translateX(15px) scale(0.98); color: #ff0000; }
+            100% { transform: translateX(25px); text-shadow: 2px 2px 8px rgba(0,0,0,0.2); color: #56c4ff; }
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        @keyframes gentleGlow {
+            0% { text-shadow: 0 0 0px rgba(59, 186, 255, 0); }
+            100% { text-shadow: 0 0 6px rgba(59, 186, 255, 0.5); }
+        }
+
+        .moving-text { display: inline-block; animation: nonlinearMove 3s ease-in-out infinite alternate; }
+        .static-text { display: inline-block; animation: gentleGlow 2s ease-in-out infinite alternate; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake { animation: shake 0.3s ease-in-out 0s 2; }
+
+        .corner-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 280px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(143, 203, 255, 0.3);
+            z-index: 10000;
+            font-family: 'Inter', 'Comic Neue', '圆体', sans-serif;
+            overflow: hidden;
+            animation: slideInLeft 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .corner-popup.hide { opacity: 0; transform: translateX(-50px); pointer-events: none; }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .popup-header {
+            background: linear-gradient(135deg, #0856a9, #1a6bb5);
+            padding: 12px 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .popup-header h4 { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .close-popup {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .close-popup:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.05); }
+        .popup-body { padding: 18px 16px; text-align: center; }
+        .popup-body p { color: #1f445c; margin-bottom: 12px; font-size: 0.9rem; }
+        .popup-buttons { display: flex; gap: 12px; margin-top: 15px; }
+        .popup-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .popup-btn-primary { background: #2c7da0; color: white; }
+        .popup-btn-primary:hover { background: #1f6685; transform: translateY(-2px); }
+        .popup-btn-secondary {
+            background: #e0f0f8;
+            color: #1f5570;
+            border: 1px solid #8fcbff;
+        }
+
+        @media (max-width: 680px) {
+            .hero h1 { font-size: 1.9rem; }
+            .swipe-card { flex: 0 0 240px; padding: 1rem; }
+            .contact-line { flex-direction: column; gap: 0.8rem; }
+            .block-title { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -701,18 +537,32 @@
     </div>
 </div>
 
+<div id="countdownPopup" class="corner-popup">
+    <div class="popup-header">
+        <h4><i class="fas fa-bell"></i> 活动通知</h4>
+        <button class="close-popup" id="closePopupBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="popup-body">
+        <p><i class="fas fa-vote-yea" style="color:#e67e22;"></i> 快来参与投票活动吧~</p>
+        <div class="popup-buttons">
+            <button class="popup-btn popup-btn-primary" id="gotoVoteBtn">
+                <i class="fas fa-arrow-right"></i> 立即投票
+            </button>
+            <button class="popup-btn popup-btn-secondary" id="laterBtn">
+                <i class="fas fa-clock"></i> 稍后
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="side-menu" id="sideMenu">
     <div class="menu-header">
-        <h3><i class="fas fa-compass" style="margin-right: 8px;"></i>目录导航</h3>
+        <h3><i class="fas fa-compass" style="margin-right: 8px;"></i>目录>></h3>
         <button class="close-menu" id="closeMenuBtn">
             <i class="fas fa-times"></i>
         </button>
     </div>
     <div class="menu-items" id="menuItems">
-        <div class="menu-item" style="justify-content: center; background: none;">
-            <div class="loading-spinner"></div>
-            <span>正在扫描页面...</span>
-        </div>
     </div>
 </div>
 
@@ -721,12 +571,19 @@
 <div class="container">
     <div class="hero">
         <div class="avatar-frame">
-            <img class="avatar" src="https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOjGnY7BcVKDjDskXR4zWUGtrxCrycAAKkHQACOb3IVjEgnK5NfOGZOwQ.jpg">
+            <img class="avatar" src="https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIVV2nzfpMZlTJ8sWnmGBgqiiP2cWeCAAKMJQACavOYVzxVUWmtlq4zOwQ.jpg">
         </div>
-        <h1>-洛程&凝洛-</h1>
-        <p style="font-size: 0.85rem; color: #6c8d9f; margin-top: -0.2rem; margin-bottom: 0.5rem; font-family:Consolas">@FoctaxForever</p>
+        <h1>
+            <span class="static-text">洛程&凝洛</span>
+            <span class="arrow-icon">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="static-text">四川成都</span>
+            <span class="static-text">At 暑假</span>
+        </h1>
+        <p style="font-size: 0.85rem; color: #6c8d9f; margin-top: -0.2rem; margin-bottom: 0.5rem; font-family:Consolas">@AbandonedFox</p>
         <div class="hero-tag">
-            <i class="fas fa-code" style="margin-right: 6px;"></i> 苦逼高一生 | FURRY爱好者
+            <i class="fas fa-code" style="margin-right: 6px;"></i> 苦逼高一生
         </div>
         <div class="bio">
             你好呀~很高兴认识你OVO！
@@ -746,14 +603,30 @@
             </div>
             <div class="card-content">
                 <div class="about-text">
-                    <p>是一只蓝色的小福泥！福建厦门苦逼高一生ovo主混点编程啥的，菜鸡一个xwx</p>
+                    <p>是一只蓝色的小福泥！福建苦逼高一生ovo主混点编程啥的，菜鸡一个xwx</p>
                     <p>cn洛程，叫我洛洛/小洛/小福泥什么的都行哦！</p>
                     <p>术力口重度依赖（？）喜欢的p主有ぴーなた、MARETU、かいりきベア等~</p>
-                    <p>目前玩的游戏有minecraft啥的pwp事音游萌新，目前玩phi和舞萌，ut/fnf混圈，猫和老鼠侦探杰瑞重度爱好者pwp</p>
+                    <p>目前玩的游戏有minecraft啥的pwp事音游萌新，目前玩phi和舞萌，ut/fnf混圈，猫和老鼠侦探/海盗杰瑞重度爱好者pwp</p>
                     <p>运动的话，咱喜欢骑行、跑步和羽球！<del>想找个羽球搭子qwq</del></p>
                     <p>梦想是到各个地方去旅游！咱玩心超级重uwu</p>
                     <p>很好说话不吃人ovo欢迎泥来交朋友~希望和大家成为超级好的好朋友nwn</p>
                     <p>待补充中owo……</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-block" id="section-skills" data-collapsible="false" data-default-collapsed="false">
+            <div class="block-title">
+                <i class="fas fa-book"></i>
+                <span>最喜欢的科目——</span>
+                <i class="fas fa-chevron-up toggle-icon"></i>
+            </div>
+            <div class="card-content">
+                <div class="skills-wrap">
+                    <span class="skill-tag"><i class="fas fa-calculator"></i>数学</span>
+                    <span class="skill-tag"><i class="fab fa-e"></i>英语</span>
+                    <span class="skill-tag"><i class="fas fa-flask"></i>化学</span>
+                    <span class="skill-tag"><i class="fas fa-laptop-code"></i>信息技术</span>
                 </div>
             </div>
         </div>
@@ -805,6 +678,30 @@
                 <p style="margin-top: 1.2rem; font-size: 0.9rem; color: #386f8c; border-left: 3px solid #89bed9; padding-left: 14px;">
                     qq申请问题可以随便填哦ovo!
                 </p>
+            </div>
+        </div>
+
+        <div class="card-block" id="section-functions" data-collapsible="true" data-default-collapsed="false">
+            <div class="block-title">
+                <i class="fas fa-tools"></i>
+                <span>小工具集~</span>
+                <i class="fas fa-chevron-up toggle-icon"></i>
+            </div>
+            <div class="card-content">
+                <div class="swipe-section">
+                    <div class="swipe-container">
+                        <div class="swipe-wrapper" id="swipeWrapper">
+                        </div>
+                    </div>
+                    <div class="swipe-nav">
+                        <button class="swipe-nav-btn" id="swipePrevBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="swipe-nav-btn" id="swipeNextBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -877,7 +774,29 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         
-        const ENCODED_PASSWORD = "Rm9jdGF4Rm9yZXZlcg==";
+        const sections = [
+            { id: 'section-about', name: '关于我~', icon: 'fas fa-user' },
+            { id: 'section-about2', name: '还是关于「我」……', icon: 'fas fa-lock' },
+            { id: 'section-skills', name: '技术 & 工具~', icon: 'fas fa-cogs' },
+            { id: 'section-contact', name: '联系方式~', icon: 'fas fa-paper-plane' },
+            { id: 'section-functions', name: '小工具集~', icon: 'fas fa-tools' }
+        ];
+        
+        sections.forEach(section => {
+            const item = document.createElement('div');
+            item.className = 'menu-item';
+            item.innerHTML = `<i class="${section.icon}"></i><span>${section.name}</span>`;
+            item.addEventListener('click', () => {
+                const target = document.getElementById(section.id);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    closeMenu();
+                }
+            });
+            menuItemsContainer.appendChild(item);
+        });
+        
+        const ENCODED_PASSWORD = "QWJhbmRvbmVkRm94";
         
         function verifyPassword(input) {
             try {
@@ -1161,159 +1080,90 @@
         
         window.showModal = (options) => modal.show(options);
         
-        // ==================== 页面检索功能 ====================
-        async function scanPages() {
-            const baseUrl = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
-            const pageList = [];
-            
-            const commonPages = [
-                'index.html', '404.html', 'about.html', 'contact.html', 'projects.html',
-                'tools.html', 'download.html', 'music.html', 'bmi.html', 'python-runner.html',
-                'watermark.html', 'function-graph.html', 'file-station.html'
-            ];
-            
-            for (const page of commonPages) {
-                const pageUrl = baseUrl + page;
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 3000);
-                    const response = await fetch(pageUrl, { method: 'HEAD', signal: controller.signal });
-                    clearTimeout(timeoutId);
-                    if (response.ok) {
-                        let name = page.replace('.html', '').replace(/_/g, ' ');
-                        name = name.charAt(0).toUpperCase() + name.slice(1);
-                        if (name === 'Index') name = '🏠 主页';
-                        pageList.push({ name: name, url: pageUrl, filename: page });
-                    }
-                } catch(e) {}
-            }
-            
-            const sitemapUrl = baseUrl + 'sitemap.json';
-            try {
-                const response = await fetch(sitemapUrl);
-                if (response.ok) {
-                    const sitemap = await response.json();
-                    if (Array.isArray(sitemap)) {
-                        for (const item of sitemap) {
-                            if (!pageList.some(p => p.filename === item.file)) {
-                                pageList.push({
-                                    name: item.name || item.file.replace('.html', ''),
-                                    url: baseUrl + item.file,
-                                    filename: item.file
-                                });
-                            }
-                        }
-                    }
-                }
-            } catch(e) {}
-            
-            const manualPages = [
-                { name: '📁 文件站', url: baseUrl + 'file-station.html', filename: 'file-station.html' },
-                { name: '🎵 音乐盒', url: baseUrl + 'music.html', filename: 'music.html' },
-                { name: '📊 BMI计算器', url: baseUrl + 'bmi.html', filename: 'bmi.html' },
-                { name: '🐍 Python运行器', url: baseUrl + 'python-runner.html', filename: 'python-runner.html' },
-                { name: '🖼️ 水印工具', url: baseUrl + 'watermark.html', filename: 'watermark.html' },
-                { name: '📈 函数图像', url: baseUrl + 'function-graph.html', filename: 'function-graph.html' }
-            ];
-            
-            for (const manual of manualPages) {
-                if (!pageList.some(p => p.filename === manual.filename)) {
-                    try {
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 2000);
-                        const response = await fetch(manual.url, { method: 'HEAD', signal: controller.signal });
-                        clearTimeout(timeoutId);
-                        if (response.ok) pageList.push(manual);
-                    } catch(e) {}
-                }
-            }
-            
-            const sections = [
-                { id: 'section-about', name: '📖 关于我~', icon: 'fas fa-user', isAnchor: true },
-                { id: 'section-about2', name: '🔒 还是关于「我」……', icon: 'fas fa-lock', isAnchor: true },
-                { id: 'section-skills', name: '⚙️ 技术 & 工具~', icon: 'fas fa-cogs', isAnchor: true },
-                { id: 'section-contact', name: '✉️ 联系方式~', icon: 'fas fa-paper-plane', isAnchor: true }
-            ];
-            
-            for (const section of sections) {
-                pageList.push({
-                    name: section.name,
-                    url: '#' + section.id,
-                    filename: section.id,
-                    isAnchor: true,
-                    icon: section.icon
-                });
-            }
-            
-            pageList.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
-            
-            renderMenu(pageList);
-            
-            if (pageList.filter(p => !p.isAnchor).length > 0) {
-                showToast(`找到 ${pageList.filter(p => !p.isAnchor).length} 个子页面~`, false);
-            }
-        }
+        const tools = [
+            { name: 'BMI计算器', desc: '来看看你健不健康吧nwn', icon: 'fas fa-calculator', url: 'functions/bmi.html' },
+            { name: '水印工具', desc: '给图片添加文字/图片水印', icon: 'fas fa-pen', url: 'functions/watermark.html' },
+            { name: '函数图像', desc: '绘制数学函数曲线~', icon: 'fas fa-chart-line', url: 'functions/coordinate.html' },
+            { name: '文件站', desc: '啊啊啊宝宝你是一个下载站🥹', icon: 'fas fa-cloud-download-alt', url: 'downloader.html' }
+        ];
         
-        function renderMenu(pages) {
-            menuItemsContainer.innerHTML = '';
-            
-            const pagesGroup = pages.filter(p => !p.isAnchor);
-            if (pagesGroup.length > 0) {
-                const groupTitle = document.createElement('div');
-                groupTitle.style.cssText = 'padding: 8px 16px; color: #8fcbff; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;';
-                groupTitle.innerHTML = '<i class="fas fa-globe"></i> 网站页面';
-                menuItemsContainer.appendChild(groupTitle);
-                
-                pagesGroup.forEach(page => {
-                    const item = document.createElement('div');
-                    item.className = 'menu-item';
-                    item.innerHTML = `<i class="fas fa-file-alt"></i><span>${page.name}</span>`;
-                    item.addEventListener('click', () => {
-                        window.location.href = page.url;
-                        closeMenu();
-                    });
-                    menuItemsContainer.appendChild(item);
-                });
-            }
-            
-            const anchorGroup = pages.filter(p => p.isAnchor);
-            if (anchorGroup.length > 0) {
-                const groupTitle = document.createElement('div');
-                groupTitle.style.cssText = 'padding: 8px 16px; color: #8fcbff; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 16px 0 8px;';
-                groupTitle.innerHTML = '<i class="fas fa-anchor"></i> 页面内锚点';
-                menuItemsContainer.appendChild(groupTitle);
-                
-                anchorGroup.forEach(anchor => {
-                    const item = document.createElement('div');
-                    item.className = 'menu-item';
-                    item.innerHTML = `<i class="${anchor.icon || 'fas fa-link'}"></i><span>${anchor.name}</span>`;
-                    item.addEventListener('click', () => {
-                        const target = document.getElementById(anchor.filename);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            closeMenu();
-                        }
-                    });
-                    menuItemsContainer.appendChild(item);
-                });
-            }
-            
-            if (pages.length === 0) {
-                menuItemsContainer.innerHTML = `
-                    <div class="menu-item" style="justify-content: center;">
-                        <span>没有找到其他页面~</span>
+        const swipeWrapper = document.getElementById('swipeWrapper');
+        const swipePrevBtn = document.getElementById('swipePrevBtn');
+        const swipeNextBtn = document.getElementById('swipeNextBtn');
+        
+        function renderCards() {
+            swipeWrapper.innerHTML = '';
+            tools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'swipe-card';
+                card.innerHTML = `
+                    <div class="swipe-card-icon">
+                        <i class="${tool.icon}"></i>
                     </div>
+                    <div class="swipe-card-title">${tool.name}</div>
+                    <div class="swipe-card-desc">${tool.desc}</div>
                 `;
-            }
-            
-            const countBadge = document.createElement('div');
-            countBadge.style.cssText = 'padding: 12px 16px; text-align: center; font-size: 0.7rem; color: #90aec2; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px;';
-            countBadge.innerHTML = `<i class="fas fa-chart-line"></i> 共收录 ${pages.length} 个页面`;
-            menuItemsContainer.appendChild(countBadge);
+                card.addEventListener('click', () => {
+                    window.open(tool.url, '_blank');
+                });
+                swipeWrapper.appendChild(card);
+            });
         }
         
-        scanPages();
+        function scrollPrev() {
+            swipeWrapper.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+        
+        function scrollNext() {
+            swipeWrapper.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+        
+        swipePrevBtn.addEventListener('click', scrollPrev);
+        swipeNextBtn.addEventListener('click', scrollNext);
+        
+        renderCards();
+        
+    })();
+
+    (function() {
+        let isClosed = false;
+        
+        const popup = document.getElementById('countdownPopup');
+        const gotoVoteBtn = document.getElementById('gotoVoteBtn');
+        const laterBtn = document.getElementById('laterBtn');
+        const closePopupBtn = document.getElementById('closePopupBtn');
+        
+        const hasClosedThisSession = sessionStorage.getItem('vote_popup_closed_session');
+        if (hasClosedThisSession === 'true') {
+            if (popup) popup.style.display = 'none';
+            return;
+        }
+        
+        function closePopup() {
+            if (isClosed) return;
+            isClosed = true;
+            sessionStorage.setItem('vote_popup_closed_session', 'true');
+            if (popup) {
+                popup.classList.add('hide');
+                setTimeout(() => {
+                    if (popup && popup.parentNode) {
+                        popup.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+        
+        function goToVote() {
+            if (isClosed) return;
+            sessionStorage.setItem('vote_popup_closed_session', 'true');
+            window.location.href = 'votion.html';
+        }
+        
+        if (gotoVoteBtn) gotoVoteBtn.addEventListener('click', goToVote);
+        if (laterBtn) laterBtn.addEventListener('click', closePopup);
+        if (closePopupBtn) closePopupBtn.addEventListener('click', closePopup);
     })();
 </script>
+    
 </body>
 </html>
