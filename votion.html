@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>投票站 - Foctax</title>
+    <link rel="preconnect" href="https://fonts.proxy.ustclug.org">
+    <link href="https://fonts.proxy.ustclug.org/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .vote-hero {
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(6px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 30px -12px rgba(44, 125, 160, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .vote-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 20px, transparent 20px, transparent 40px);
+            pointer-events: none;
+        }
+        .vote-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f5e7e, #3282a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .vote-sub {
+            color: #3a6e8c;
+            background: rgba(115, 176, 204, 0.2);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .vote-desc {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #2c4b64;
+            font-size: 0.95rem;
+        }
+        .closed-banner {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
+        }
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .vote-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(2px);
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .vote-card:hover {
+            background: rgba(255, 255, 255, 0.96);
+            border-color: #c2e0f0;
+            transform: translateY(-2px);
+        }
+        .crown-badge {
+            position: absolute;
+            top: -8px;
+            right: 16px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .medal-2 { background: linear-gradient(135deg, #bdc3c7, #95a5a6); }
+        .medal-3 { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .vote-option-icon { font-size: 2rem; width: 56px; text-align: center; }
+        .vote-info { flex: 3; min-width: 160px; }
+        .vote-option-name { font-size: 1.2rem; font-weight: 600; color: #165a77; margin-bottom: 0.2rem; }
+        .vote-option-desc { font-size: 0.75rem; color: #608da5; }
+        .vote-stats {
+            flex: 1.5;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .vote-count {
+            background: #e0f0f8;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1f6685;
+            font-family: monospace;
+        }
+        .vote-percent {
+            background: #d9eaf5;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #236b8e;
+            min-width: 65px;
+            text-align: center;
+        }
+        .vote-btn {
+            background: #b8e1fc;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1a2c3e;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .disabled-vote {
+            background: #ccc !important;
+            color: #666 !important;
+            cursor: not-allowed !important;
+            border-color: #aaa !important;
+        }
+        .total-badge {
+            background: white;
+            border-radius: 60px;
+            padding: 0.5rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+        }
+        .progress-bar-bg {
+            background: #d9eaf5;
+            border-radius: 40px;
+            height: 8px;
+            flex: 1;
+            overflow: hidden;
+            margin-left: 0.5rem;
+        }
+        .progress-fill {
+            background: #2c7da0;
+            width: 0%;
+            height: 100%;
+            border-radius: 40px;
+            transition: width 0.3s ease;
+        }
+        .footer-note {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #608da5;
+            border-top: 1px solid #cce3ef;
+            padding-top: 2rem;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 680px) {
+            .vote-card {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .vote-stats { justify-content: center; }
+            .vote-option-icon { align-self: center; }
+            .vote-info { text-align: center; }
+            .progress-bar-bg { width: 100%; }
+            .crown-badge { top: -4px; right: 8px; font-size: 0.6rem; padding: 2px 8px; }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="nav-brand">
+        <i class="fas fa-file-alt"></i>
+        <span>来投票啦——</span>
+    </div>
+    <div class="nav-links">
+        <a id="refreshUIBtn"><i class="fas fa-sync-alt"></i> 手动刷新</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="vote-hero">
+        <div class="vote-title">
+            <i class="fas fa-trophy" style="color:#f39c12;"></i> 谁是世一傲娇？
+        </div>
+        <div class="vote-sub">
+            <i class="fas fa-calendar-check"></i> 投票活动已圆满结束
+        </div>
+        <div class="closed-banner">
+            <i class="fas fa-ban"></i>
+            <span>活动已于 2026年5月1日 截止投票</span>
+            <i class="fas fa-flag-checkered"></i>
+        </div>
+        <div class="total-badge" id="totalVotesBadge">
+            <i class="fas fa-poll"></i> 总票数: <strong id="totalVotesCount">0</strong>
+        </div>
+        <div class="vote-desc">
+            冠军是 <strong style="color:#e67e22;">callMy_TF (笨狼)</strong>~！
+        </div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+    <div class="legend" id="legendArea"></div>
+    <div class="footer-note">
+        <i class="fas fa-heart"></i> OVO
+    </div>
+</div>
+
+<div id="toastMessage" class="toast-msg"></div>
+
+<script>
+    const OPTIONS = [
+        { id: 0, name: "callMy_TF", desc: "笨狼", icon: "fas fa-1", color: "#e67e22", votes: 52778 },
+        { id: 1, name: "acidAluminum", desc: "笨猫", icon: "fas fa-2", color: "#9b59b6", votes: 9102 },
+        { id: 2, name: "lorchen_pwp", desc: "笨狐", icon: "fas fa-3", color: "#3498db", votes: 2778 }
+    ];
+    
+    const IS_CLOSED = true;
+    let votes = OPTIONS.map(opt => opt.votes);
+    let votedMap = { 0: new Set(), 1: new Set(), 2: new Set() };
+    let currentFingerprint = '';
+    
+    const optionsGrid = document.getElementById('optionsGrid');
+    const totalVotesSpan = document.getElementById('totalVotesCount');
+    const toastMsg = document.getElementById('toastMessage');
+    
+    let toastTimer = null;
+    function showToast(message, isError = false) {
+        toastMsg.textContent = message;
+        toastMsg.style.background = isError ? '#8b3c3c' : '#1e2f3a';
+        toastMsg.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toastMsg.classList.remove('show');
+        }, 2000);
+    }
+    
+    function generateFingerprint() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(0, 0, 100, 50);
+        ctx.fillStyle = '#fff';
+        ctx.fillText('votion', 10, 10);
+        const canvasData = canvas.toDataURL();
+        const fingerprint = {
+            ua: navigator.userAgent.substring(0, 50),
+            lang: navigator.language,
+            screen: `${screen.width}x${screen.height}`,
+            tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            canvas: canvasData.substring(0, 80)
+        };
+        const str = JSON.stringify(fingerprint);
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash).toString(36) + Date.now().toString(36).slice(-4);
+    }
+    
+    function getTotalVotes() { return votes.reduce((a,b) => a + b, 0); }
+    
+    function getRanking() {
+        const withIndex = votes.map((v, idx) => ({ idx, votes: v }));
+        withIndex.sort((a, b) => b.votes - a.votes);
+        return withIndex.map(item => item.idx);
+    }
+    
+    function renderUI() {
+        const total = getTotalVotes();
+        totalVotesSpan.innerText = total.toLocaleString();
+        const ranking = getRanking();
+        let html = '';
+        for (let i = 0; i < OPTIONS.length; i++) {
+            const opt = OPTIONS[i];
+            const count = votes[i];
+            const percent = total === 0 ? 0 : ((count / total) * 100).toFixed(1);
+            const rank = ranking.indexOf(i) + 1;
+            let rankBadge = '';
+            if (rank === 1) rankBadge = '<div class="crown-badge"><i class="fas fa-crown"></i> 冠军</div>';
+            else if (rank === 2) rankBadge = '<div class="crown-badge medal-2"><i class="fas fa-medal"></i> 亚军</div>';
+            else if (rank === 3) rankBadge = '<div class="crown-badge medal-3"><i class="fas fa-medal"></i> 季军</div>';
+            html += `
+                <div class="vote-card" data-id="${i}">
+                    ${rankBadge}
+                    <div class="vote-option-icon"><i class="${opt.icon}" style="color: ${opt.color}; font-size: 2rem;"></i></div>
+                    <div class="vote-info">
+                        <div class="vote-option-name">${opt.name} <span style="font-size:0.8rem; color:#888;">(${opt.desc})</span></div>
+                        <div class="progress-bar-bg" style="margin-top: 8px; max-width: 200px;">
+                            <div class="progress-fill" style="width: ${percent}%; background: ${opt.color};"></div>
+                        </div>
+                    </div>
+                    <div class="vote-stats">
+                        <span class="vote-count">${count.toLocaleString()} 票</span>
+                        <span class="vote-percent">${percent}%</span>
+                        <button class="vote-btn disabled-vote" disabled><i class="fas fa-ban"></i> 已截止</button>
+                    </div>
+                </div>
+            `;
+        }
+        optionsGrid.innerHTML = html;
+        
+        const legendDiv = document.getElementById('legendArea');
+        let legendHtml = '<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">';
+        for (let i = 0; i < OPTIONS.length; i++) {
+            const opt = OPTIONS[i];
+            const percent = total === 0 ? 0 : ((votes[i] / total) * 100).toFixed(1);
+            legendHtml += `
+                <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,240,0.6); padding: 4px 12px; border-radius: 40px;">
+                    <i class="${opt.icon}" style="color: ${opt.color}; font-size: 0.9rem;"></i>
+                    <span style="font-size:0.8rem; font-weight:500;">${opt.name}</span>
+                    <span style="font-size:0.75rem; color:#2c7da0;">${percent}%</span>
+                </div>
+            `;
+        }
+        legendHtml += '</div>';
+        legendDiv.innerHTML = legendHtml;
+    }
+    
+    function manualRefresh() { renderUI(); showToast('页面已刷新', false); }
+    
+    function init() {
+        currentFingerprint = generateFingerprint();
+        renderUI();
+        document.getElementById('refreshUIBtn').addEventListener('click', manualRefresh);
+    }
+    init();
+</script>
+</body>
+</html>
